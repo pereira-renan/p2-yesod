@@ -1,0 +1,4 @@
+/                 HomeR  GET
+/outra            OutraR GET
+/somar/#Int/#Int  SomarR GET
+/hello/#Text      OlaR   GET
