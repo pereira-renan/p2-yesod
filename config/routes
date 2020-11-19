@@ -21,5 +21,7 @@
 /login                       EntrarR    GET POST
 /logout                      SairR      POST
 
-/admin                       AdminR     GET
+/consultar/lista             ListConsultaR GET
+/consultar/#PetsId/agendar   AgendarR    POST
 
+/admin                       AdminR     GET
