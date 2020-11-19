@@ -4,38 +4,132 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1ef75c9649277bf1ec4ad67153911b5f43f3a08fd83b9b247944259349e3c0e5
+-- hash: 5f615fe7e1da58563b46893e7baa0921bd80030fe57394765f5ac2789e30cfb7
 
 name:           petparty
 version:        0.0.0
 build-type:     Simple
 
+flag dev
+  description: Turn on development settings, like auto-reload templates.
+  manual: False
+  default: False
+
+flag library-only
+  description: Build for use with "yesod devel"
+  manual: False
+  default: False
+
 library
   exposed-modules:
-      Add
       Application
       Foundation
-      Home
+      Handler.Common
+      Handler.Home
+      Handler.Pet
+      Import
+      Import.NoFoundation
+      Model
+      Settings
+      Settings.StaticFiles
   other-modules:
       Paths_petparty
   hs-source-dirs:
       src
   build-depends:
-      base
+      aeson
+    , base
+    , bytestring
+    , case-insensitive
+    , classy-prelude
+    , classy-prelude-conduit
+    , classy-prelude-yesod
+    , conduit
+    , containers
+    , data-default
+    , directory
+    , fast-logger
+    , file-embed
+    , foreign-store
+    , hjsmin
+    , http-conduit
+    , monad-control
+    , monad-logger
+    , persistent
+    , persistent-postgresql
+    , persistent-template
+    , safe
+    , shakespeare
+    , template-haskell
     , text
+    , time
+    , unordered-containers
+    , vector
+    , wai
+    , wai-extra
+    , wai-logger
+    , warp
+    , yaml
+    , yesod
+    , yesod-auth
     , yesod-core
+    , yesod-form
+    , yesod-static
+  if (flag(dev)) || (flag(library-only))
+    ghc-options: -Wall -fwarn-tabs -O0
+    cpp-options: -DDEVELOPMENT
+  else
+    ghc-options: -Wall -fwarn-tabs -O2
   default-language: Haskell2010
 
 executable petparty
-  main-is: Main.hs
+  main-is: main.hs
   other-modules:
+      DevelMain
       Paths_petparty
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base
+      aeson
+    , base
+    , bytestring
+    , case-insensitive
+    , classy-prelude
+    , classy-prelude-conduit
+    , classy-prelude-yesod
+    , conduit
+    , containers
+    , data-default
+    , directory
+    , fast-logger
+    , file-embed
+    , foreign-store
+    , hjsmin
+    , http-conduit
+    , monad-control
+    , monad-logger
+    , persistent
+    , persistent-postgresql
+    , persistent-template
     , petparty
+    , safe
+    , shakespeare
+    , template-haskell
     , text
+    , time
+    , unordered-containers
+    , vector
+    , wai
+    , wai-extra
+    , wai-logger
+    , warp
+    , yaml
+    , yesod
+    , yesod-auth
     , yesod-core
+    , yesod-form
+    , yesod-static
+  if flag(library-only)
+    buildable: False
   default-language: Haskell2010

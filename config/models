@@ -1,0 +1,8 @@
+Produto
+    nome Text
+    preco Double
+    deriving Show
+Pets
+    nome Text
+    idade Int
+    deriving Show
