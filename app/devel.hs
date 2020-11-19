@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "petparty" Application (develMain)
+import "aulahaskell" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()

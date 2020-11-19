@@ -112,6 +112,3 @@ postDelPetR pid = do
     _ <- runDB $ get404 pid 
     runDB $ delete pid 
     redirect ListPetR
-
-
-

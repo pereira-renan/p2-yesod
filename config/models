@@ -1,8 +1,16 @@
-Produto
-    nome Text
-    preco Double
-    deriving Show
 Pets
     nome Text
     idade Int
+    deriving Show
+
+Vets
+    nome Text
+    especialidade Text
+    deriving Show
+
+Usuario
+    nome  Text
+    email Text
+    senha Text
+    UniqueEmail email
     deriving Show

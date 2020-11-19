@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5f615fe7e1da58563b46893e7baa0921bd80030fe57394765f5ac2789e30cfb7
+-- hash: abce33d3cdce04e2957c6bffb9a24f0a051cc80b640a9dadfe5cdd3a99a91e48
 
 name:           petparty
 version:        0.0.0
@@ -26,12 +26,16 @@ library
       Foundation
       Handler.Common
       Handler.Home
+      Handler.Login
       Handler.Pet
+      Handler.Usuario
+      Handler.Vet
       Import
       Import.NoFoundation
       Model
       Settings
       Settings.StaticFiles
+      Tool
   other-modules:
       Paths_petparty
   hs-source-dirs:

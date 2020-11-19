@@ -22,8 +22,30 @@ data App = App
 mkYesodData "App" $(parseRoutesFile "config/routes")
 
 instance Yesod App where
+    authRoute _ = Just EntrarR
+    
+    isAuthorized HomeR _ = return Authorized
+    isAuthorized EntrarR _ = return Authorized
+    isAuthorized CadastrarR  _ = return Authorized
+    isAuthorized AdminR _ = isAdmin
+    isAuthorized _ _ = isUsuario 
     makeLogger = return . appLogger
 
+isAdmin :: Handler AuthResult
+isAdmin = do 
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> return AuthenticationRequired
+        Just "admin@admin.com" -> return Authorized
+        Just _ -> return $ Unauthorized "VC EH USUARIO COMUM"
+
+isUsuario :: Handler AuthResult
+isUsuario = do 
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> return AuthenticationRequired
+        Just _ -> return Authorized
+        
 type Form a = Html -> MForm Handler (FormResult a, Widget)    
     
 instance YesodPersist App where

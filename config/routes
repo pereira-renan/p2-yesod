@@ -3,9 +3,23 @@
 /favicon.ico FaviconR GET
 /robots.txt RobotsR GET
 
-/ HomeR GET 
+/                            HomeR GET 
 /pet                         PetR      GET POST
-/pet/#PetsId/descr            DescPetR  GET
+/pet/#PetsId/descr           DescPetR  GET
 /pets                        ListPetR  GET
-/pet/#PetsId/modifica         UpdPetR   GET POST
-/pet/#PetsId/del              DelPetR   POST
+/pet/#PetsId/modifica        UpdPetR   GET POST
+/pet/#PetsId/del             DelPetR   POST
+
+/vet                         VetR      GET POST
+/vet/#VetsId/descr           DescVetR  GET
+/vets                        ListVetR  GET
+/vet/#VetsId/modifica        UpdVetR   GET POST
+/vet/#VetsId/del             DelVetR   POST
+
+/cadastrar                   CadastrarR   GET POST
+
+/login                       EntrarR    GET POST
+/logout                      SairR      POST
+
+/admin                       AdminR     GET
+
