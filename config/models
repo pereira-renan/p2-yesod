@@ -18,4 +18,4 @@ Usuario
 Consulta 
     usuarioid   UsuarioId
     petid       PetsId 
-    vlpago      Int
+    desc        Text

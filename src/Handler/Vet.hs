@@ -47,14 +47,14 @@ postVetR = do
     ((resp,_),_) <- runFormPost (formVet Nothing)
     case resp of 
          FormSuccess vetz -> do 
-             pid <- runDB $ insert vetz
-             redirect (DescVetR pid)
+             vid <- runDB $ insert vetz
+             redirect (DescVetR vid)
          _ -> redirect HomeR
 
--- SELECT * from vetz where id = pid 
+-- SELECT * from vetz where id = vid 
 getDescVetR :: VetsId -> Handler Html
-getDescVetR pid = do 
-    vetz <- runDB $ get404 pid
+getDescVetR vid = do 
+    vetz <- runDB $ get404 vid
     valid <- lookupSession "_ID"
     defaultLayout [whamlet|
         $if null valid
@@ -86,7 +86,7 @@ getListVetR = do
                         
                         <th>
                 <tbody>
-                    $forall Entity pid v <- vets
+                    $forall Entity vid v <- vets
                         <tr>
                             <td>
                                 #{vetsNome v}
@@ -95,30 +95,30 @@ getListVetR = do
                                 #{vetsEspecialidade v}
                             
                             <th>
-                                <a href=@{UpdVetR pid}>
+                                <a href=@{UpdVetR vid}>
                                     Editar
                             <th>
-                                <form action=@{DelVetR pid} method=post>
+                                <form action=@{DelVetR vid} method=post>
                                     <input type="submit" value="X">
     |]
 
 getUpdVetR :: VetsId -> Handler Html
-getUpdVetR pid = do 
-    antigo <- runDB $ get404 pid
-    auxVetR (UpdVetR pid) (Just antigo)    
+getUpdVetR vid = do 
+    antigo <- runDB $ get404 vid
+    auxVetR (UpdVetR vid) (Just antigo)    
     
--- UPDATE vetz WHERE id = pid SET ...
+-- UPDATE vetz WHERE id = vid SET ...
 postUpdVetR :: VetsId -> Handler Html
-postUpdVetR pid = do
+postUpdVetR vid = do
     ((resp,_),_) <- runFormPost (formVet Nothing)
     case resp of 
          FormSuccess novo -> do
-            runDB $ replace pid novo
-            redirect (DescVetR pid) 
+            runDB $ replace vid novo
+            redirect (DescVetR vid) 
          _ -> redirect HomeR
 
 postDelVetR :: VetsId -> Handler Html
-postDelVetR pid = do 
-    _ <- runDB $ get404 pid 
-    runDB $ delete pid 
+postDelVetR vid = do 
+    _ <- runDB $ get404 vid 
+    runDB $ delete vid 
     redirect ListVetR

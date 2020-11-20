@@ -27,6 +27,7 @@ instance Yesod App where
     isAuthorized HomeR _ = return Authorized
     isAuthorized EntrarR _ = return Authorized
     isAuthorized CadastrarR  _ = return Authorized
+    isAuthorized ListConsultaR  _ = return Authorized
     isAuthorized AdminR _ = isAdmin
     isAuthorized _ _ = isUsuario 
     makeLogger = return . appLogger

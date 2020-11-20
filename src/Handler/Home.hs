@@ -26,7 +26,18 @@ getHomeR = defaultLayout $ do
             <li>
                 <a href=@{ListPetR}>
                     Listar Pets Existentes
-            
+                    
+            <li>
+                <a href=@{ListVetR}>
+                    Listar Veterinarios Existentes
+
+            $if null valid
+                <li>
+                    Usuário nível padrão.
+            $else
+                <li>
+                    Usuário nível admin.
+
             $maybe email <- sess
                     <div>
                         #{email}

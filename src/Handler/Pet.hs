@@ -51,7 +51,7 @@ postPetR = do
 getDescPetR :: PetsId -> Handler Html
 getDescPetR pid = do 
     petz <- runDB $ get404 pid
-    (widget,_) <- generateFormPost formQt
+    (widget,_) <- generateFormPost formDesc
     defaultLayout [whamlet|
         <h1>
             Nome: #{petsNome petz}
@@ -61,7 +61,7 @@ getDescPetR pid = do
         
         <form action=@{ConsultarR pid} method=post>
             ^{widget}
-            <input type="submit" value="Comprar">
+            <input type="submit" value="Enviar">
     |]
 
 getListPetR :: Handler Html

@@ -26,7 +26,7 @@ postEntrarR :: Handler Html
 postEntrarR = do 
     ((result,_),_) <- runFormPost formLogin
     case result of 
-        FormSuccess ("admin@admin.com", senha) -> do
+        FormSuccess ("admin@admin.com", "root") -> do
             setSession "_EMAIL" "admin@admin.com"
             setSession "_ID" "admin"
             redirect HomeR
@@ -51,7 +51,7 @@ postEntrarR = do
                         |]
                         redirect EntrarR 
         _ -> do
-            setSession "_ID" "user"
+            setSession "_ID" ""
             redirect HomeR
         
 postSairR :: Handler Html 

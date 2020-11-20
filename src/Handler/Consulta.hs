@@ -28,20 +28,25 @@ getListConsultaR = do
                      defaultLayout $ do 
                         [whamlet|
                             <h1>
-                                COMPRAS de #{usuarioNome usuario}
+                                Olá #{usuarioNome usuario}!
+                            <br>    
+                                Segue abaixo registro de consultas:
                             
                             <ul>
                                 $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
                                     <li>
-                                        O cliente {usuarioNome usuario} trouxe o pet #{petsNome pets} para consulta com X.
-                                        Realizou uma consulta no valor de #{consultaVlpago consulta} e descreveu o seguinte diagnóstico:
+                                        O #{petsNome pets} deu entrada em consulta na unidade.
+                                    <br>
+                                        O veterinário escreveu o seguinte diagnóstico:
+                                    <br>
+                                        #{consultaDesc consulta}
         |]
 
 postConsultarR :: PetsId -> Handler Html
 postConsultarR pid = do
-    ((resp,_),_) <- runFormPost formQt
+    ((resp,_),_) <- runFormPost formDesc
     case resp of 
-         FormSuccess qt -> do 
+         FormSuccess desc -> do 
              sess <- lookupSession "_EMAIL"
              case sess of 
                   Nothing -> redirect HomeR
@@ -50,6 +55,6 @@ postConsultarR pid = do
                       case usuario of 
                            Nothing -> redirect HomeR 
                            Just (Entity uid _) -> do 
-                               _ <- runDB $ insert (Consulta uid pid qt)
+                               _ <- runDB $ insert (Consulta uid pid desc)
                                redirect ListConsultaR
          _ -> redirect HomeR
