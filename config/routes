@@ -22,6 +22,6 @@
 /logout                      SairR      POST
 
 /consultar/lista             ListConsultaR GET
-/consultar/#PetsId/agendar   AgendarR    POST
+/consultar/#PetsId/agendar   ConsultarR    POST
 
 /admin                       AdminR     GET

@@ -7,12 +7,13 @@
 module Handler.Pet where
 
 import Import
+import Tool
 --import Database.Persist.Postgresql
 
 -- (<$>) = fmap :: Functor f => (a -> b) -> f a -> f b
 -- (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 formPet :: Maybe Pets -> Form Pets
-formPet p = renderDivs $ Pets  
+formPet p = renderDivs $ Pets
     <$> areq textField (FieldSettings "Nome: " 
                                       Nothing
                                       (Just "hs12")
@@ -50,17 +51,22 @@ postPetR = do
 getDescPetR :: PetsId -> Handler Html
 getDescPetR pid = do 
     petz <- runDB $ get404 pid
+    (widget,_) <- generateFormPost formQt
     defaultLayout [whamlet|
         <h1>
             Nome: #{petsNome petz}
         
         <h2>
             Idade: #{petsIdade petz}
+        
+        <form action=@{ConsultarR pid} method=post>
+            ^{widget}
+            <input type="submit" value="Comprar">
     |]
 
 getListPetR :: Handler Html
 getListPetR = do 
-    -- pets :: [Entity Pets]
+    -- pets :: [Entity Pet]
     pets <- runDB $ selectList [] [Desc PetsIdade]
     defaultLayout [whamlet|
             <table>
@@ -70,7 +76,7 @@ getListPetR = do
                             Nome
                         
                         <th>
-                            Pets
+                            Pet
                         
                         <th>
                         
@@ -79,6 +85,7 @@ getListPetR = do
                     $forall Entity pid p <- pets
                         <tr>
                             <td>
+                                <a href=@{DescPetR pid}>
                                 #{petsNome p}
                             
                             <td>

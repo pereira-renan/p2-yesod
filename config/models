@@ -18,6 +18,4 @@ Usuario
 Consulta 
     usuarioid   UsuarioId
     petid       PetsId 
-    vetid       VetsId 
-    vlpago      Double
-    descricao   Text
+    vlpago      Int
