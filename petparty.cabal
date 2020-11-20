@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7cb6317958c32a355fb5cee00da27972a8398dd915a363b31cfca94dd6deeab0
+-- hash: ea92551fd22be07c037db38b900eb4a4e752c61e6bbfaf151c7c653197bc196f
 
 name:           petparty
 version:        0.0.0
@@ -26,6 +26,7 @@ library
       Foundation
       Handler.Common
       Handler.Consulta
+      Handler.Forbidden
       Handler.Home
       Handler.Login
       Handler.Pet

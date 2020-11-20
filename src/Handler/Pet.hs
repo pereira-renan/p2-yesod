@@ -24,98 +24,125 @@ formPet p = renderDivs $ Pets
 
 auxPetR :: Route App -> Maybe Pets -> Handler Html
 auxPetR rt petz = do
-    (widget,_) <- generateFormPost (formPet petz)
-    defaultLayout $ do
-        [whamlet|
-            <h1>
-                 CADASTRO DE PET
-            
-            <form action=@{rt} method=post>
-                ^{widget}
-                <input type="submit" value="Cadastrar">
-        |]
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            (widget,_) <- generateFormPost (formPet petz)
+            defaultLayout $ do
+                [whamlet|
+                    <h1>
+                        CADASTRO DE PET
+                    
+                    <form action=@{rt} method=post>
+                        ^{widget}
+                        <input type="submit" value="Cadastrar">
+                |]
     
 getPetR :: Handler Html
 getPetR = auxPetR PetR Nothing
     
 postPetR :: Handler Html
 postPetR = do
-    ((resp,_),_) <- runFormPost (formPet Nothing)
-    case resp of 
-         FormSuccess petz -> do 
-             pid <- runDB $ insert petz
-             redirect (DescPetR pid)
-         _ -> redirect HomeR
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            ((resp,_),_) <- runFormPost (formPet Nothing)
+            case resp of 
+                FormSuccess petz -> do 
+                    pid <- runDB $ insert petz
+                    redirect (DescPetR pid)
+                _ -> redirect HomeR
 
 -- SELECT * from petz where id = pid 
 getDescPetR :: PetsId -> Handler Html
-getDescPetR pid = do 
-    petz <- runDB $ get404 pid
-    (widget,_) <- generateFormPost formDesc
-    defaultLayout [whamlet|
-        <h1>
-            Nome: #{petsNome petz}
-        
-        <h2>
-            Idade: #{petsIdade petz}
-        
-        <form action=@{ConsultarR pid} method=post>
-            ^{widget}
-            <input type="submit" value="Enviar">
-    |]
+getDescPetR pid = do  
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            petz <- runDB $ get404 pid
+            (widget,_) <- generateFormPost formDesc
+            defaultLayout [whamlet|
+                <h1>
+                    Nome: #{petsNome petz}
+                
+                <h2>
+                    Idade: #{petsIdade petz}
+                
+                <form action=@{ConsultarR pid} method=post>
+                    ^{widget}
+                    <input type="submit" value="Enviar">
+            |]
 
 getListPetR :: Handler Html
 getListPetR = do 
-    -- pets :: [Entity Pet]
-    pets <- runDB $ selectList [] [Desc PetsIdade]
-    defaultLayout [whamlet|
-            <table>
-                <thead>
-                    <tr>
-                        <th> 
-                            Nome
-                        
-                        <th>
-                            Pet
-                        
-                        <th>
-                        
-                        <th>
-                <tbody>
-                    $forall Entity pid p <- pets
-                        <tr>
-                            <td>
-                                <a href=@{DescPetR pid}>
-                                #{petsNome p}
-                            
-                            <td>
-                                #{petsIdade p}
-                            
-                            <th>
-                                <a href=@{UpdPetR pid}>
-                                    Editar
-                            <th>
-                                <form action=@{DelPetR pid} method=post>
-                                    <input type="submit" value="X">
-    |]
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do 
+            pets <- runDB $ selectList [] [Desc PetsIdade]
+            defaultLayout [whamlet|
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> 
+                                    Nome
+                                
+                                <th>
+                                    Pet
+                                
+                                <th>
+                                
+                                <th>
+                        <tbody>
+                            $forall Entity pid p <- pets
+                                <tr>
+                                    <td>
+                                        <a href=@{DescPetR pid}>
+                                        #{petsNome p}
+                                    
+                                    <td>
+                                        #{petsIdade p}
+                                    
+                                    <th>
+                                        <a href=@{UpdPetR pid}>
+                                            Editar
+                                    <th>
+                                        <form action=@{DelPetR pid} method=post>
+                                            <input type="submit" value="X">
+            |]
 
 getUpdPetR :: PetsId -> Handler Html
 getUpdPetR pid = do 
-    antigo <- runDB $ get404 pid
-    auxPetR (UpdPetR pid) (Just antigo)    
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            antigo <- runDB $ get404 pid
+            auxPetR (UpdPetR pid) (Just antigo)    
     
 -- UPDATE petz WHERE id = pid SET ...
 postUpdPetR :: PetsId -> Handler Html
-postUpdPetR pid = do
-    ((resp,_),_) <- runFormPost (formPet Nothing)
-    case resp of 
-         FormSuccess novo -> do
-            runDB $ replace pid novo
-            redirect (DescPetR pid) 
-         _ -> redirect HomeR
+postUpdPetR pid = do 
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            ((resp,_),_) <- runFormPost (formPet Nothing)
+            case resp of 
+                FormSuccess novo -> do
+                    runDB $ replace pid novo
+                    redirect (DescPetR pid) 
+                _ -> redirect HomeR
 
 postDelPetR :: PetsId -> Handler Html
 postDelPetR pid = do 
-    _ <- runDB $ get404 pid 
-    runDB $ delete pid 
-    redirect ListPetR
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            _ <- runDB $ get404 pid 
+            runDB $ delete pid 
+            redirect ListPetR

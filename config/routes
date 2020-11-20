@@ -25,3 +25,5 @@
 /consultar/#PetsId/agendar   ConsultarR    POST
 
 /admin                       AdminR     GET
+
+/403                         ForbiddenR     GET

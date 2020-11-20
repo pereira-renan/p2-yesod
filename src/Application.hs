@@ -43,6 +43,7 @@ import Handler.Login
 import Handler.Pet
 import Handler.Vet
 import Handler.Consulta
+import Handler.Forbidden
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

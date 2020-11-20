@@ -37,7 +37,7 @@ getListConsultaR = do
                                     <li>
                                         O #{petsNome pets} deu entrada em consulta na unidade.
                                     <br>
-                                        O veterinário escreveu o seguinte diagnóstico:
+                                        O veterinário descreveu o seguinte diagnóstico:
                                     <br>
                                         #{consultaDesc consulta}
         |]
