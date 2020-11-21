@@ -20,6 +20,10 @@ getEntrarR = do
     (widget,_) <- generateFormPost formLogin
     msg <- getMessage
     defaultLayout $ do 
+        sess <- lookupSession "_EMAIL"
+        valid <- lookupSession "_ID"
+        toWidgetHead $(luciusFile  "templates/header.lucius")
+        $(whamletFile "templates/header.hamlet")
         geraForm EntrarR "ENTRAR" "Login" msg widget
 
 postEntrarR :: Handler Html
@@ -61,7 +65,11 @@ postSairR = do
     redirect HomeR
 
 getAdminR :: Handler Html
-getAdminR = defaultLayout $ do
+getAdminR = defaultLayout $ do 
+    sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
+    toWidgetHead $(luciusFile  "templates/header.lucius")
+    $(whamletFile "templates/header.hamlet")
     [whamlet|
             <h1>
                 BEM-VINDO ADMIN

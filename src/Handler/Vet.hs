@@ -7,6 +7,7 @@
 module Handler.Vet where
 
 import Import
+import Text.Lucius
 --import Database.Persist.Postgresql
 
 -- (<$>) = fmap :: Functor f => (a -> b) -> f a -> f b
@@ -34,7 +35,11 @@ auxVetR rt vetz = do
         Just _ -> do
             (widget,_) <- generateFormPost (formVet vetz)
             valid <- lookupSession "_ID"
-            defaultLayout $ do
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
                 [whamlet|
                     $if null valid
                         <li>
@@ -73,17 +78,18 @@ getDescVetR vid = do
         Just _ -> do
             vetz <- runDB $ get404 vid
             valid <- lookupSession "_ID"
-            defaultLayout [whamlet|
-                $if null valid
-                    <li>
-                        Você não tem permissão para acessar essa página.
-                $else
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
+                [whamlet|
                     <h1>
                         Nome: #{vetsNome vetz}
                     
                     <h2>
                         Especialiade: #{vetsEspecialidade vetz}
-            |]
+                |]
 
 getListVetR :: Handler Html
 getListVetR = do 
@@ -92,7 +98,12 @@ getListVetR = do
         Nothing -> redirect ForbiddenR
         Just _ -> do
             vets <- runDB $ selectList [] [Desc VetsEspecialidade]
-            defaultLayout [whamlet|
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
+                [whamlet|
                     <table>
                         <thead>
                             <tr>
@@ -117,6 +128,8 @@ getListVetR = do
                                     <th>
                                         <a href=@{UpdVetR vid}>
                                             Editar
+                                    $if null valid
+                                    $else
                                     <th>
                                         <form action=@{DelVetR vid} method=post>
                                             <input type="submit" value="X">
@@ -135,6 +148,11 @@ getUpdVetR vid = do
 postUpdVetR :: VetsId -> Handler Html
 postUpdVetR vid = do
     sess <- lookupSession "_ID"
+    defaultLayout $ do 
+        sess <- lookupSession "_EMAIL"
+        valid <- lookupSession "_ID"
+        toWidgetHead $(luciusFile  "templates/header.lucius")
+        $(whamletFile "templates/header.hamlet")
     case sess of 
         Nothing -> redirect ForbiddenR
         Just _ -> do

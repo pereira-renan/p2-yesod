@@ -1,0 +1,24 @@
+<header>
+    <div class="head">
+        <div class="home">
+            <a href=@{HomeR}>
+                <div class="bhome item-1">
+                    PetParty
+        <div class="navbuttons">  
+            <div class="nav link-1">
+                spacing
+            <a href=@{ListVetR}>
+                    <div class="nav link-2">
+                        Veterinários
+            <div class="nav link-3">
+                Pets
+            <div class="nav link-4">
+                Consultas
+            $if null sess
+                <a href=@{EntrarR}>
+                    <div class="nav link-4">
+                        Login
+            $else
+                <div class="nav link-5">
+                    <form action=@{SairR} method="post">                 
+                        <button type="submit" class="btn-link">Logout</button>

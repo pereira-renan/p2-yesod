@@ -7,48 +7,16 @@
 module Handler.Home where
 
 import Import
+import Text.Hamlet
+import Text.Lucius
 import Database.Persist.Postgresql
 
 --         <img src=@{StaticR img_produto_jpg}>
 getHomeR :: Handler Html
 getHomeR = defaultLayout $ do 
-    addStylesheet (StaticR css_bootstrap_css)
     sess <- lookupSession "_EMAIL"
     valid <- lookupSession "_ID"
-    [whamlet|
-        <h1>
-            PETPARTY - SISTEMA DE AGENDAMENTOS DE CONSULTA
-        <ul>
-            <li> 
-                <a href=@{PetR}>
-                    Cadastrar Novos Pets
-
-            <li>
-                <a href=@{ListPetR}>
-                    Listar Pets Existentes
-                    
-            <li>
-                <a href=@{ListVetR}>
-                    Listar Veterinarios Existentes
-
-            $if null valid
-                <li>
-                    Usuário nível padrão.
-            $else
-                <li>
-                    Usuário nível admin.
-
-            $maybe email <- sess
-                    <div>
-                        #{email}
-                        <form method=post action=@{SairR}>
-                            <input type="submit" value="Sair">
-            $nothing
-                <li>
-                    <a href=@{CadastrarR}>
-                        Cadastrar Usuário
-                    
-                <li>
-                    <a href=@{EntrarR}>
-                        Login
-    |]
+    toWidgetHead $(luciusFile  "templates/header.lucius")
+    $(whamletFile "templates/header.hamlet")
+    toWidgetHead $(luciusFile  "templates/home.lucius")
+    $(whamletFile "templates/home.hamlet")

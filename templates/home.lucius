@@ -1,0 +1,11 @@
+.landing {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffdb99;
+  letter-spacing: 0.2px;
+  padding: 25px;
+  border-radius: 25px;
+}
+.title {
+  text-align: center;
+  font-weight: bold;
+}

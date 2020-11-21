@@ -12,7 +12,7 @@ import Database.Persist.Sql
 
 getListConsultaR :: Handler Html
 getListConsultaR = do
-    sess <- lookupSession "_EMAIL"
+    sess <- lookupSession "_ID"
     case sess of 
         Nothing -> redirect HomeR
         Just email -> do
@@ -44,17 +44,21 @@ getListConsultaR = do
 
 postConsultarR :: PetsId -> Handler Html
 postConsultarR pid = do
-    ((resp,_),_) <- runFormPost formDesc
-    case resp of 
-         FormSuccess desc -> do 
-             sess <- lookupSession "_EMAIL"
-             case sess of 
-                  Nothing -> redirect HomeR
-                  Just email -> do 
-                      usuario <- runDB $ getBy (UniqueEmail email)
-                      case usuario of 
-                           Nothing -> redirect HomeR 
-                           Just (Entity uid _) -> do 
-                               _ <- runDB $ insert (Consulta uid pid desc)
-                               redirect ListConsultaR
-         _ -> redirect HomeR
+    sess <- lookupSession "_ID"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            ((resp,_),_) <- runFormPost formDesc
+            case resp of 
+                FormSuccess desc -> do 
+                    sess <- lookupSession "_EMAIL"
+                    case sess of 
+                        Nothing -> redirect HomeR
+                        Just email -> do 
+                            usuario <- runDB $ getBy (UniqueEmail email)
+                            case usuario of 
+                                Nothing -> redirect HomeR 
+                                Just (Entity uid _) -> do 
+                                    _ <- runDB $ insert (Consulta uid pid desc)
+                                    redirect ListConsultaR
+                _ -> redirect HomeR

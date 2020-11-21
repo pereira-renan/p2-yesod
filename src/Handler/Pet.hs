@@ -8,6 +8,7 @@ module Handler.Pet where
 
 import Import
 import Tool
+import Text.Lucius
 --import Database.Persist.Postgresql
 
 -- (<$>) = fmap :: Functor f => (a -> b) -> f a -> f b
@@ -21,6 +22,12 @@ formPet p = renderDivs $ Pets
                                       [("class","myClass")]
                        ) (fmap petsNome p)
     <*> areq intField "Idade: " (fmap petsIdade p)
+    <*> areq textField (FieldSettings "Motivo da Visita: " 
+                                      Nothing
+                                      (Just "hs12")
+                                      Nothing
+                                      [("class","myClass")]
+                       ) (fmap petsMotivoVisita p)
 
 auxPetR :: Route App -> Maybe Pets -> Handler Html
 auxPetR rt petz = do
@@ -29,7 +36,11 @@ auxPetR rt petz = do
         Nothing -> redirect ForbiddenR
         Just _ -> do
             (widget,_) <- generateFormPost (formPet petz)
-            defaultLayout $ do
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
                 [whamlet|
                     <h1>
                         CADASTRO DE PET
@@ -64,17 +75,25 @@ getDescPetR pid = do
         Just _ -> do
             petz <- runDB $ get404 pid
             (widget,_) <- generateFormPost formDesc
-            defaultLayout [whamlet|
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
+                [whamlet|
                 <h1>
                     Nome: #{petsNome petz}
                 
                 <h2>
                     Idade: #{petsIdade petz}
+
+                <h3>
+                    Idade: #{petsMotivoVisita petz}
                 
                 <form action=@{ConsultarR pid} method=post>
                     ^{widget}
                     <input type="submit" value="Enviar">
-            |]
+                |]
 
 getListPetR :: Handler Html
 getListPetR = do 
@@ -83,7 +102,12 @@ getListPetR = do
         Nothing -> redirect ForbiddenR
         Just _ -> do 
             pets <- runDB $ selectList [] [Desc PetsIdade]
-            defaultLayout [whamlet|
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
+                [whamlet|
                     <table>
                         <thead>
                             <tr>
@@ -94,8 +118,7 @@ getListPetR = do
                                     Pet
                                 
                                 <th>
-                                
-                                <th>
+                                    Motivo da Consulta
                         <tbody>
                             $forall Entity pid p <- pets
                                 <tr>
@@ -105,13 +128,20 @@ getListPetR = do
                                     
                                     <td>
                                         #{petsIdade p}
+
+                                    <td>
+                                        #{petsMotivoVisita p}
                                     
                                     <th>
                                         <a href=@{UpdPetR pid}>
                                             Editar
-                                    <th>
-                                        <form action=@{DelPetR pid} method=post>
-                                            <input type="submit" value="X">
+                                    $if null valid
+                                        <th>
+                                            
+                                    $else
+                                        <th>
+                                            <form action=@{DelPetR pid} method=post>
+                                                <input type="submit" value="ASD">
             |]
 
 getUpdPetR :: PetsId -> Handler Html
@@ -127,6 +157,11 @@ getUpdPetR pid = do
 postUpdPetR :: PetsId -> Handler Html
 postUpdPetR pid = do 
     sess <- lookupSession "_EMAIL"
+    defaultLayout $ do 
+        sess <- lookupSession "_EMAIL"
+        valid <- lookupSession "_ID"
+        toWidgetHead $(luciusFile  "templates/header.lucius")
+        $(whamletFile "templates/header.hamlet")
     case sess of 
         Nothing -> redirect ForbiddenR
         Just _ -> do

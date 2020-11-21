@@ -1,6 +1,7 @@
 Pets
     nome Text
     idade Int
+    motivoVisita Text
     deriving Show
 
 Vets
