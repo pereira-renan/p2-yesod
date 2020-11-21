@@ -4,7 +4,8 @@ $maybe mensa <- msg
             
 <h1>
     #{titulo}
-           
+
 <form method=post action=@{rt}>
     ^{widget}
-    <input type="submit" value=#{btn}>
+    <br>
+        <input type="submit" value=#{btn}>

@@ -93,47 +93,43 @@ getDescVetR vid = do
 
 getListVetR :: Handler Html
 getListVetR = do 
-    sess <- lookupSession "_ID"
-    case sess of 
-        Nothing -> redirect ForbiddenR
-        Just _ -> do
-            vets <- runDB $ selectList [] [Desc VetsEspecialidade]
-            defaultLayout $ do 
-                sess <- lookupSession "_EMAIL"
-                valid <- lookupSession "_ID"
-                toWidgetHead $(luciusFile  "templates/header.lucius")
-                $(whamletFile "templates/header.hamlet")
-                [whamlet|
-                    <table>
-                        <thead>
+        vets <- runDB $ selectList [] [Desc VetsEspecialidade]
+        defaultLayout $ do 
+            sess <- lookupSession "_EMAIL"
+            valid <- lookupSession "_ID"
+            toWidgetHead $(luciusFile  "templates/header.lucius")
+            $(whamletFile "templates/header.hamlet")
+            [whamlet|
+                <table>
+                    <thead>
+                        <tr>
+                            <th> 
+                                Nome
+                            
+                            <th>
+                                Vets
+                            
+                            <th>
+                            
+                            <th>
+                    <tbody>
+                        $forall Entity vid v <- vets
                             <tr>
-                                <th> 
-                                    Nome
+                                <td>
+                                    #{vetsNome v}
+                                
+                                <td>
+                                    #{vetsEspecialidade v}
                                 
                                 <th>
-                                    Vets
-                                
+                                    <a href=@{UpdVetR vid}>
+                                        Editar
+                                $if null valid
+                                $else
                                 <th>
-                                
-                                <th>
-                        <tbody>
-                            $forall Entity vid v <- vets
-                                <tr>
-                                    <td>
-                                        #{vetsNome v}
-                                    
-                                    <td>
-                                        #{vetsEspecialidade v}
-                                    
-                                    <th>
-                                        <a href=@{UpdVetR vid}>
-                                            Editar
-                                    $if null valid
-                                    $else
-                                    <th>
-                                        <form action=@{DelVetR vid} method=post>
-                                            <input type="submit" value="X">
-            |]
+                                    <form action=@{DelVetR vid} method=post>
+                                        <input type="submit" value="X">
+        |]
 
 getUpdVetR :: VetsId -> Handler Html
 getUpdVetR vid = do 

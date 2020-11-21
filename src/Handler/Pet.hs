@@ -41,6 +41,7 @@ auxPetR rt petz = do
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
                     <h1>
                         CADASTRO DE PET

@@ -14,7 +14,7 @@ getListConsultaR :: Handler Html
 getListConsultaR = do
     sess <- lookupSession "_ID"
     case sess of 
-        Nothing -> redirect HomeR
+        Nothing -> redirect ForbiddenR
         Just email -> do
             usu <- runDB $ getBy (UniqueEmail email)
             case usu of 
@@ -31,15 +31,6 @@ getListConsultaR = do
                                 Olá #{usuarioNome usuario}!
                             <br>    
                                 Segue abaixo registro de consultas:
-                            
-                            <ul>
-                                $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
-                                    <li>
-                                        O #{petsNome pets} deu entrada em consulta na unidade.
-                                    <br>
-                                        O veterinário descreveu o seguinte diagnóstico:
-                                    <br>
-                                        #{consultaDesc consulta}
         |]
 
 postConsultarR :: PetsId -> Handler Html
