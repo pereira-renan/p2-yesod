@@ -2,22 +2,27 @@
     <div class="landing">
         <div class="title">
             PetAssistant
-    <div class="general">
-        <br>
-            <p>
+        <div class="general">
+            <br>
                 Olá!
-        <br>
-            <p>
+            <br>
                 Bem-vindo ao PetAssistant. Somos uma plataforma de apoio para o consultórios veterinários criada 100% em Haskell.
-        <br>
-            <p>
-                Aqui você pode verificar os
-                    <a href=@{ListVetR}>
+            <br>
+                Aqui você pode verificar os 
+                    <a href=@{ListVetR} class="general">
                         veterinários
-                    disponíveis no consultório e suas especialidades, assim como
-                        <a href=@{VetR}>
+                    disponíveis no consultório e suas especialidades, assim como 
+                        <a href=@{PetR} class="general">
                             registrar
                         o seu Pet seu nome, idade, raça e o motivo da sua consulta.
-        <br>
-            <p>
+            <br>
                 Ao chegar no consultório, informe a identificação e o nome do seu pet ao veterinário. Ele irá realizar a leitura da sua ficha de entrada e, após a consulta, irá registrar o diagnóstico do seu animalzinho para que possa verificar posteriormente em casa.
+            <br>
+            <br>
+            <div class="end">
+                <a href=@{CadastrarR}>
+                    <div class="bottom cadastro">
+                        Cadastro
+                <a href=@{EntrarR}>
+                    <div class="bottom cadastro">
+                        Login            

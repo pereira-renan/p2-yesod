@@ -24,6 +24,7 @@ getEntrarR = do
         valid <- lookupSession "_ID"
         toWidgetHead $(luciusFile  "templates/header.lucius")
         $(whamletFile "templates/header.hamlet")
+        toWidgetHead $(luciusFile  "templates/form.lucius")
         geraForm EntrarR "ENTRAR" "Login" msg widget
 
 postEntrarR :: Handler Html

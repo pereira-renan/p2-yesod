@@ -3,7 +3,7 @@
         <div class="home">
             <a href=@{HomeR}>
                 <div class="bhome item-1">
-                    PetParty
+                    PetAssistant
         <div class="navbuttons">  
             <div class="nav link-1">
                 spacing
@@ -22,3 +22,5 @@
                 <div class="nav link-5">
                     <form action=@{SairR} method="post">                 
                         <button type="submit" class="btn-link">Logout</button>
+    <div class="gap">
+        -

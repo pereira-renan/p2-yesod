@@ -54,3 +54,7 @@ a {
     font-size: inherit;
     font-weight: inherit;
 }
+
+.gap {
+  visibility: hidden;
+}
