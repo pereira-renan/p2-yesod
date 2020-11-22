@@ -125,21 +125,21 @@ getListVetR = do
                 <table>
                         <thead>
                             <tr>
-                                <th class="colv1"> 
+                                <th class="colv1">
                                     Nome do Vet
                                 
                                 <th class="colv2">
-                                    Especialiade
+                                    Especialidades
                                 
                                 <th class="colv3">
                                     Rede Social
 
                                 <th class="colv4">
-                                    Dias no Consultório
+                                    Horário de Atendimento
 
-                                <th class="col5v">
+                                <th class="colv5">
                                 
-                                <th class="col6v">
+                                <th class="colv6">
                                     
                         <tbody>
                             $forall Entity vid v <- vets
@@ -155,7 +155,7 @@ getListVetR = do
                                         <a href=#{vetsRedeSocial v} target="_blank">
                                             #{vetsRedeSocial v}
 
-                                    <th>
+                                    <td>
                                         #{vetsExpediente v}
 
                                     $if null valid

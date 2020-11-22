@@ -73,17 +73,21 @@ th.col3 {
     width: 60%
 }
 
-th.col4, th.col5, th.col6 {
+
+th.col4, th.col5, th.col6, th.colv5, th.colv6  {
     width: 75px;
     visibility: hidden;
 }
 
-th.col4, th.col5, th.col6 {
-    width: 75px;
-    visibility: hidden;
+th.ccol1 {
+    width: 100px;
 }
 
 th.ccol3, th.ccol5 {
+    width: 40%;
+}
+
+th.ccol2 {
     width: 75px;
 }
 
@@ -92,9 +96,9 @@ th.colv1, th.colv2 {
 }
 
 th.colv1, th.colv2 {
-    width: 100px;
+    width: 200px;
 }
 
-th.colv3 {
-    width: 300px;
+th.colv3, th.colv4 {
+    width: 30%;
 }

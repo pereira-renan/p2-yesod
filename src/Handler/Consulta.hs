@@ -32,16 +32,13 @@ getListConsultaR = do
                         $(whamletFile "templates/header.hamlet")
                         toWidgetHead $(luciusFile  "templates/form.lucius")
                         [whamlet|
-                            <h1>
-                                Olá #{usuarioNome usuario}, segue abaixo registro de consultas!
-                            <br>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="col1"> 
+                                        <th class="ccol1">
                                             Nome do Pet
                                         
-                                        <th class="col2">
+                                        <th class="ccol2">
                                             Idade
                                         
                                         <th class="ccol3">
