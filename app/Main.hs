@@ -1,5 +1,8 @@
 import Prelude     (IO)
 import Application (appMain)
+import System.Environment
 
 main :: IO ()
-main = appMain
+main = do
+  port <- getEnv "PORT"
+  warp (fromIntegral $ read port) App
