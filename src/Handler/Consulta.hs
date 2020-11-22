@@ -25,7 +25,8 @@ getListConsultaR = do
                      let sql = "SELECT ??,??,?? FROM usuario \
                         \ INNER JOIN consulta ON consulta.usuarioid = usuario.id \
                         \ INNER JOIN pets ON consulta.petid = pets.id \
-                        \ WHERE usuario.id = ?"
+                        \ WHERE usuario.id <> ? \
+                        \ ORDER BY pets.nome;"
                      pets <- runDB $ rawSql sql [toPersistValue uid] :: Handler [(Entity Usuario,Entity Consulta,Entity Pets)]
                      defaultLayout $ do 
                         toWidgetHead $(luciusFile  "templates/header.lucius")
@@ -53,7 +54,7 @@ getListConsultaR = do
                                                     Diagnóstico da Consulta
                                                     
                                         <tbody>
-                                            $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
+                                            $forall (Entity _ usuario, Entity _ consulta, Entity _ pets) <- pets
                                                 <tr>
                                                     <td>
                                                         #{petsNome pets}
@@ -70,7 +71,7 @@ getListConsultaR = do
 
 postConsultarR :: PetsId -> Handler Html
 postConsultarR pid = do
-    sess <- lookupSession "_ID"
+    sess <- lookupSession "_EMAIL"
     case sess of 
         Nothing -> redirect ForbiddenR
         Just _ -> do
