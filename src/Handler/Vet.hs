@@ -26,6 +26,18 @@ formVet v = renderDivs $ Vets
                                       Nothing
                                       [("class","myClass")]
                        ) (fmap vetsEspecialidade v)
+    <*> areq textField (FieldSettings "Rede Social: " 
+                                      Nothing
+                                      (Just "hs12")
+                                      Nothing
+                                      [("class","myClass")]
+                       ) (fmap vetsRedeSocial v)
+    <*> areq textField (FieldSettings "Expediente: " 
+                                      Nothing
+                                      (Just "hs12")
+                                      Nothing
+                                      [("class","myClass")]
+                       ) (fmap vetsExpediente v)
 
 auxVetR :: Route App -> Maybe Vets -> Handler Html
 auxVetR rt vetz = do
@@ -40,6 +52,7 @@ auxVetR rt vetz = do
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
                     $if null valid
                         <li>
@@ -83,12 +96,18 @@ getDescVetR vid = do
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
                     <h1>
                         Nome: #{vetsNome vetz}
                     
                     <h2>
                         Especialiade: #{vetsEspecialidade vetz}
+                        
+                    <h3>
+                        Redes Sociais: #{vetsRedeSocial vetz}
+                    <br>
+                        Expediente: #{vetsExpediente vetz}
                 |]
 
 getListVetR :: Handler Html
@@ -99,49 +118,61 @@ getListVetR = do
             valid <- lookupSession "_ID"
             toWidgetHead $(luciusFile  "templates/header.lucius")
             $(whamletFile "templates/header.hamlet")
+            toWidgetHead $(luciusFile  "templates/form.lucius")
             [whamlet|
                 <h1>
                     Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e durante quais dias estarão disponíveis na unidade.
                 <table>
-                    <thead>
-                        <tr>
-                            <th> 
-                                Nome
-                            
-                            <th>
-                                Especialidade
-                            
-                            <th>
-                                Rede social
-
-                            <th>
-                            
-                            <th>
-                    <tbody>
-                        $forall Entity vid v <- vets
+                        <thead>
                             <tr>
-                                <td>
-                                    #{vetsNome v}
+                                <th class="col1"> 
+                                    Nome do Vet
                                 
-                                <td>
-                                    #{vetsEspecialidade v}
-
-                                <td>
-                                    <a href="https://www.instagram.com/pereira_renan/">
-                                        https://www.instagram.com/pereira_renan/
-
+                                <th class="col2">
+                                    Especialiade
                                 
-                                $if null valid
+                                <th class="col3">
+                                    Redes Social
+
+                                <th class="col4">
+                                    Dias no Consultório
+
+                                <th class="col5">
+                                
+                                <th class="col6">
                                     
-                                $else
-                                    <th>
-                                        <a href=@{UpdVetR vid}>
-                                            Editar
+                        <tbody>
+                            $forall Entity vid v <- vets
+                                <tr>
+                                    <td>
+                                        <a href=@{DescVetR vid}>
+                                        #{vetsNome v}
+                                    
+                                    <td>
+                                        #{vetsEspecialidade v}
+
+                                    <td>
+                                        <a href=#{vetsRedeSocial v}>
+                                            #{vetsRedeSocial v}
 
                                     <th>
-                                        <form action=@{DelVetR vid} method=post>
-                                            <input type="submit" value="X">
-        |]
+                                        #{vetsExpediente v}
+
+                                    $if null valid
+                                        <th>
+                                            <form action=@{DescVetR vid} method=get>
+                                                <input type="submit" value="Ver">
+                                        <th>
+                                            <form action=@{PetR} method=post>
+                                                <input type="submit" value="Agendar">
+                                    $else
+                                        <th>
+                                            <form action=@{UpdVetR vid} method=get>
+                                                <input type="submit" value="Editar">
+                                        <th>
+                                            <form action=@{DelVetR vid} method=post>
+                                                <input type="submit" value="Deletar">                                    
+            |]
 
 getUpdVetR :: VetsId -> Handler Html
 getUpdVetR vid = do 

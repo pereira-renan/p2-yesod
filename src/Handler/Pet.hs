@@ -71,7 +71,7 @@ postPetR = do
             case resp of 
                 FormSuccess petz -> do 
                     pid <- runDB $ insert petz
-                    redirect (DescPetR pid)
+                    redirect ListPetR
                 _ -> redirect HomeR
 
 -- SELECT * from petz where id = pid 
@@ -158,8 +158,8 @@ getListPetR = do
                                             <input type="submit" value="Editar">
 
                                     <th>
-                                        <form action=@{ConsultarR pid} method=post>
-                                            <input type="submit" value="Consultar">
+                                        <form action=@{DescPetR pid} method=get>
+                                            <input type="submit" value="Atender">
 
                                     <th>
                                         <form action=@{DelPetR pid} method=post>
@@ -191,7 +191,7 @@ postUpdPetR pid = do
             case resp of 
                 FormSuccess novo -> do
                     runDB $ replace pid novo
-                    redirect (DescPetR pid) 
+                    redirect ListPetR 
                 _ -> redirect HomeR
 
 postDelPetR :: PetsId -> Handler Html

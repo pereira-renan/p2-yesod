@@ -14,6 +14,7 @@ import Database.Persist.Sql
 getListConsultaR :: Handler Html
 getListConsultaR = do
     sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
     case sess of 
         Nothing -> redirect HomeR
         Just email -> do
@@ -29,12 +30,41 @@ getListConsultaR = do
                      defaultLayout $ do 
                         toWidgetHead $(luciusFile  "templates/header.lucius")
                         $(whamletFile "templates/header.hamlet")
+                        toWidgetHead $(luciusFile  "templates/form.lucius")
                         [whamlet|
                             <h1>
-                                Olá #{usuarioNome usuario}!
-                            <br>    
-                                Segue abaixo registro de consultas:
-        |]
+                                Olá #{usuarioNome usuario}, segue abaixo registro de consultas!
+                            <br>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="col1"> 
+                                            Nome do Pet
+                                        
+                                        <th class="col2">
+                                            Idade
+                                        
+                                        <th class="ccol3">
+                                            Motivo da Consulta
+
+                                        <th class="ccol5">
+                                            Diagnóstico da Consulta
+                                            
+                                <tbody>
+                                    $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
+                                        <tr>
+                                            <td>
+                                                #{petsNome pets}
+                                            
+                                            <td>
+                                                #{petsIdade pets}
+
+                                            <td class="desc">
+                                                #{petsMotivoVisita pets}
+
+                                            <td class="desc">
+                                                #{consultaDesc consulta}
+                        |]
 
 postConsultarR :: PetsId -> Handler Html
 postConsultarR pid = do

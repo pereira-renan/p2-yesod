@@ -7,6 +7,8 @@ Pets
 Vets
     nome Text
     especialidade Text
+    redeSocial Text
+    expediente Text
     deriving Show
 
 Usuario
@@ -19,4 +21,4 @@ Usuario
 Consulta 
     usuarioid   UsuarioId
     petid       PetsId 
-    desc        Text
+    desc        Textarea

@@ -4,6 +4,7 @@
 /robots.txt RobotsR GET
 
 /                            HomeR GET 
+
 /pet                         PetR      GET POST
 /pet/#PetsId/descr           DescPetR  GET
 /pets                        ListPetR  GET
@@ -21,9 +22,9 @@
 /login                       EntrarR    GET POST
 /logout                      SairR      POST
 
-/consultar/lista             ListConsultaR GET
-/consultar/#PetsId/agendar   ConsultarR    POST
+/consulta/lista              ListConsultaR GET
+/consulta/#PetsId/atender    ConsultarR POST
 
 /admin                       AdminR     GET
 
-/403                         ForbiddenR     GET
+/403                         ForbiddenR GET

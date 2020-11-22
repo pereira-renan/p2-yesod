@@ -61,7 +61,7 @@ td.desc {
     text-align: left;
 }
 
-th.col1 {
+th.col1, th.ccol4 {
     width: 100px
 }
 
@@ -76,4 +76,13 @@ th.col3 {
 th.col4, th.col5, th.col6 {
     width: 75px;
     visibility: hidden;
+}
+
+th.col4, th.col5, th.col6 {
+    width: 75px;
+    visibility: hidden;
+}
+
+th.ccol3, th.ccol5 {
+    width: 75px;
 }

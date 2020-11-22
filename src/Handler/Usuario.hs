@@ -22,6 +22,7 @@ getCadastrarR :: Handler Html
 getCadastrarR = do 
     (widget,_) <- generateFormPost formUsu
     sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
     msg <- getMessage
     defaultLayout $ do 
         toWidgetHead $(luciusFile  "templates/header.lucius")
