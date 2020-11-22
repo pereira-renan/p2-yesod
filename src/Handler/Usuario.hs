@@ -13,10 +13,10 @@ import Text.Lucius
 formUsu :: Form (Usuario, Text)
 formUsu = renderBootstrap $ (,)
     <$> (Usuario 
-        <$> areq textField "Nome: " Nothing
-        <*> areq emailField "E-mail: " Nothing
-        <*> areq passwordField "Senha: " Nothing)
-    <*> areq passwordField "Digite Novamente: " Nothing
+        <$> areq textField "Nome:" Nothing
+        <*> areq emailField "E-mail:" Nothing
+        <*> areq passwordField "Senha:" Nothing)
+    <*> areq passwordField "Digite Novamente:" Nothing
 
 getCadastrarR :: Handler Html
 getCadastrarR = do 

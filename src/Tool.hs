@@ -13,4 +13,4 @@ geraForm :: Route App -> Text -> Text -> Maybe Html -> Widget -> Widget
 geraForm rt titulo btn msg widget = $(whamletFile "templates/form.hamlet")
 
 formDesc :: Form Textarea
-formDesc = renderDivs (areq textareaField "Diagnóstico da Consulta: " Nothing)
+formDesc = renderBootstrap (areq textareaField "Diagnóstico da Consulta" Nothing)

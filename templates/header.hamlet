@@ -41,8 +41,8 @@
                             Login
                 $else
                     $maybe email <- sess
-                        <div class="nav link-1">
-                            #{email}  
+                        <div class="nav link-2">
+                            #{email}
                         <div class="nav link-1">
                             spacing
                         <a href=@{PetR}>

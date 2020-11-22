@@ -55,3 +55,7 @@ a.general {
 .bottom:hover{
   background-color: #ffae1a;  
 }
+
+.intro {
+    text-align: justify;
+}

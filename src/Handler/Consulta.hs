@@ -32,35 +32,40 @@ getListConsultaR = do
                         $(whamletFile "templates/header.hamlet")
                         toWidgetHead $(luciusFile  "templates/form.lucius")
                         [whamlet|
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="ccol1">
-                                            Nome do Pet
-                                        
-                                        <th class="ccol2">
-                                            Idade
-                                        
-                                        <th class="ccol3">
-                                            Motivo da Consulta
+                            <div class="background-list">
+                                <h1>
+                                    CONSULTAS
+                                <br>
+                                <br>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="ccol1">
+                                                    Nome do Pet
+                                                
+                                                <th class="ccol2">
+                                                    Idade
+                                                
+                                                <th class="ccol3">
+                                                    Motivo da Consulta
 
-                                        <th class="ccol5">
-                                            Diagnóstico da Consulta
-                                            
-                                <tbody>
-                                    $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
-                                        <tr>
-                                            <td>
-                                                #{petsNome pets}
-                                            
-                                            <td>
-                                                #{petsIdade pets}
+                                                <th class="ccol5">
+                                                    Diagnóstico da Consulta
+                                                    
+                                        <tbody>
+                                            $forall (Entity _ _, Entity _ consulta, Entity _ pets) <- pets
+                                                <tr>
+                                                    <td>
+                                                        #{petsNome pets}
+                                                    
+                                                    <td>
+                                                        #{petsIdade pets}
 
-                                            <td class="desc">
-                                                #{petsMotivoVisita pets}
+                                                    <td class="desc">
+                                                        #{petsMotivoVisita pets}
 
-                                            <td class="desc">
-                                                #{consultaDesc consulta}
+                                                    <td class="desc">
+                                                        #{consultaDesc consulta}
                         |]
 
 postConsultarR :: PetsId -> Handler Html

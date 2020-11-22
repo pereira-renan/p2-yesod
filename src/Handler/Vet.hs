@@ -13,30 +13,30 @@ import Text.Lucius
 -- (<$>) = fmap :: Functor f => (a -> b) -> f a -> f b
 -- (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 formVet :: Maybe Vets -> Form Vets
-formVet v = renderDivs $ Vets  
-    <$> areq textField (FieldSettings "Nome: " 
+formVet v = renderBootstrap $ Vets  
+    <$> areq textField (FieldSettings "Nome" 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","vetNome")]
                        ) (fmap vetsNome v)
-    <*> areq textField (FieldSettings "Especialidade: " 
+    <*> areq textField (FieldSettings "Especialidade" 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","vetEspec")]
                        ) (fmap vetsEspecialidade v)
-    <*> areq textField (FieldSettings "Rede Social: " 
+    <*> areq textField (FieldSettings "Rede Social" 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","vetRedes")]
                        ) (fmap vetsRedeSocial v)
-    <*> areq textField (FieldSettings "Expediente: " 
+    <*> areq textareaField (FieldSettings "Expediente" 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","vetExpediente")]
                        ) (fmap vetsExpediente v)
 
 auxVetR :: Route App -> Maybe Vets -> Handler Html
@@ -54,16 +54,18 @@ auxVetR rt vetz = do
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
-                    $if null valid
-                        <li>
-                            Você não tem permissão para acessar essa página.
-                    $else
-                        <h1>
-                            CADASTRO DE VETERINARIOS
-                        
-                        <form action=@{rt} method=post>
-                            ^{widget}
-                            <input type="submit" value="Cadastrar">
+                    <div class="background-list">
+                        <div class="form">
+                            $if null valid
+                                <li>
+                                    Você não tem permissão para acessar essa página.
+                            $else
+                                <h1>
+                                    VETERINÁRIOS
+                                
+                                <form action=@{rt} method=post>
+                                    ^{widget}
+                                    <input id="enviarVet" type="submit" value="Enviar">
                 |]
     
 getVetR :: Handler Html
@@ -98,16 +100,18 @@ getDescVetR vid = do
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
-                    <h1>
-                        Nome: #{vetsNome vetz}
-                    
-                    <h2>
-                        Especialiade: #{vetsEspecialidade vetz}
-                        
-                    <h3>
-                        Redes Sociais: #{vetsRedeSocial vetz}
-                    <br>
-                        Expediente: #{vetsExpediente vetz}
+                    <div class="background-list">
+                        <div class="form">
+                            <h1>
+                                Nome: #{vetsNome vetz}
+                            
+                            <h2>
+                                Especialiade: #{vetsEspecialidade vetz}
+                                
+                            <h3>
+                                Redes Sociais: #{vetsRedeSocial vetz}
+                            <br>
+                                Expediente: #{vetsExpediente vetz}
                 |]
 
 getListVetR :: Handler Html
@@ -120,58 +124,67 @@ getListVetR = do
             $(whamletFile "templates/header.hamlet")
             toWidgetHead $(luciusFile  "templates/form.lucius")
             [whamlet|
-                <h1>
-                    Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e durante quais dias estarão disponíveis na unidade.
-                <table>
-                        <thead>
-                            <tr>
-                                <th class="colv1">
-                                    Nome do Vet
-                                
-                                <th class="colv2">
-                                    Especialidades
-                                
-                                <th class="colv3">
-                                    Rede Social
+                <div class="background-list">
+                    <div class="list">
+                        <h1>
+                            VETERINÁRIOS
+                        <br>
+                        <h3 class="intro">
+                            Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e durante quais dias estarão disponíveis na unidade.
+                        $maybe adm <- valid
+                            <form action=@{VetR} method=get>
+                                <input class="btnAdd" type="submit" value="Adicionar Veterinário">
+                        $nothing
+                        <table>
+                                <thead>
+                                    <tr>
+                                        <th class="colv1">
+                                            Nome do Vet
+                                        
+                                        <th class="colv2">
+                                            Especialidades
+                                        
+                                        <th class="colv3">
+                                            Rede Social
 
-                                <th class="colv4">
-                                    Horário de Atendimento
+                                        <th class="colv4">
+                                            Horário de Atendimento
 
-                                <th class="colv5">
-                                
-                                <th class="colv6">
-                                    
-                        <tbody>
-                            $forall Entity vid v <- vets
-                                <tr>
-                                    <td>
-                                        <a href=@{DescVetR vid}>
-                                        #{vetsNome v}
-                                    
-                                    <td>
-                                        #{vetsEspecialidade v}
+                                        <th class="colv5">
+                                        
+                                        <th class="colv6">
+                                            
+                                <tbody>
+                                    $forall Entity vid v <- vets
+                                        <tr>
+                                            <td>
+                                                <a href=@{DescVetR vid}>
+                                                #{vetsNome v}
+                                            
+                                            <td>
+                                                #{vetsEspecialidade v}
 
-                                    <td>
-                                        <a href=#{vetsRedeSocial v} target="_blank">
-                                            #{vetsRedeSocial v}
+                                            <td>
+                                                <a href="https://"+#{vetsRedeSocial v} target="_blank">
+                                                    #{vetsRedeSocial v}
 
-                                    <td>
-                                        #{vetsExpediente v}
+                                            <td>
+                                                #{vetsExpediente v}
 
-                                    $if null valid
-                                        <th>
-                                            <form action=@{DescVetR vid} method=get>
-                                                <input type="submit" value="Ver">
-                                        <th>
-                                            <form action=@{PetR} method=get>
-                                                <input type="submit" value="Agendar">
-                                    $else
-                                        <th>
-                                            <form action=@{UpdVetR vid} method=get>
-                                                <input type="submit" value="Editar">
-                                        <th>
-                                            <form action=@{DelVetR vid} method=post>
-                                                <input type="submit" value="Deletar">                                    
+                                            $if null valid
+                                                <th>
+                                                    <form action=@{DescVetR vid} method=get>
+                                                        <input type="submit" value="Ver">
+                                                <th>
+                                                    <form action=@{PetR} method=get>
+                                                        <input type="submit" value="Agendar">
+                                            $else
+                                                <th>
+                                                    <form action=@{UpdVetR vid} method=get>
+                                                        <input type="submit" value="Editar">
+                                                <th>
+                                                    <form action=@{DelVetR vid} method=post>
+                                                        <input type="submit" value="Deletar">                                    
             |]
 
 getUpdVetR :: VetsId -> Handler Html

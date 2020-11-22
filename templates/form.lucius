@@ -23,14 +23,20 @@
 .form {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #ffdb99;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   height: 82vh;
   border-radius: 25px;    
   padding: 25px;
+}
+
+.background-list {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffdb99;
+  justify-content: center;
+  min-height: 82vh;
+  border-radius: 25px;    
+  padding: 16px;
+  height: 100%;
 }
 
 .controls.input {
@@ -47,11 +53,14 @@
 table{
     font-family: Arial, Helvetica, sans-serif;
     table-layout: fixed;
-    height: 82%;
     width: 100%;
+    border: none;
+    padding: 10px;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
-table, td, th {
+td, th {
     border: solid 1px;
     padding: 10px;
     text-align: center;
@@ -95,10 +104,67 @@ th.colv1, th.colv2 {
     width: 100px;
 }
 
-th.colv1, th.colv2 {
-    width: 200px;
+th.colv1, th.colv2, th.colv4 {
+    width: 150px;
 }
 
-th.colv3, th.colv4 {
+th.colv3 {
     width: 30%;
+    min-width: 50px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+h3.intro {
+    font-weight: normal;
+    font-size: 24px;
+    text-align: justify;
+    margin: 12px;
+}
+
+h3 {
+    font-weight: normal;
+}
+
+td {
+    background-color: white;
+}
+
+th {
+    background-color: #ffae1a;
+}
+
+textarea#hident2, textarea#hs12 {
+    min-width: 350px;
+    max-width: 350px;
+    max-height: 200px;
+    min-height: 50px;
+}
+
+label.control-label {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+input[id="enviarVet"], input[id="hident3"],input[id="hident2"] {
+    width: 100px;
+    margin-top: 25px;
+}
+
+.vetNome, .vetEspec, .vetRedes, .vetExpediente, .petNome, .petIdade, .petMotivo {
+    height: 25px;
+    width: 350px;
+}
+
+.btnAdd {
+    display: block;
+    margin: 0 auto;
+}
+
+
+.formCampos {
+    margin-top: 100px;
 }

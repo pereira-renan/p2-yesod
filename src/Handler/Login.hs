@@ -27,7 +27,7 @@ getEntrarR = do
         toWidgetHead $(luciusFile  "templates/form.lucius")
         geraForm EntrarR "Login" "Enviar" msg widget
         [whamlet|
-            <form action=@{CadastrarR} method=get>
+            <form class="formCampos" action=@{CadastrarR} method=get>
                 <input type="submit" value="Cadastro"> 
         |]
 
