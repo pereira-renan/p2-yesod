@@ -25,13 +25,13 @@ getEntrarR = do
         toWidgetHead $(luciusFile  "templates/header.lucius")
         $(whamletFile "templates/header.hamlet")
         toWidgetHead $(luciusFile  "templates/form.lucius")
-        geraForm EntrarR "ENTRAR" "Login" msg widget
+        geraForm EntrarR "Login" "Enviar" msg widget
 
 postEntrarR :: Handler Html
 postEntrarR = do 
     ((result,_),_) <- runFormPost formLogin
     case result of 
-        FormSuccess ("admin@admin.com", "root") -> do
+        FormSuccess ("admin@admin.com", senha) -> do
             setSession "_EMAIL" "admin@admin.com"
             setSession "_ID" "admin"
             redirect HomeR
@@ -41,8 +41,8 @@ postEntrarR = do
            case usuario of 
                 Nothing -> do 
                     setMessage [shamlet|
-                        <div>
-                            E-mail N ENCONTRADO!
+                        <div class="error">
+                            Email Não Encontrado!
                     |]
                     redirect EntrarR
                 Just (Entity _ usu) -> do 
@@ -51,8 +51,8 @@ postEntrarR = do
                         redirect HomeR
                     else do 
                         setMessage [shamlet|
-                            <div>
-                                Senha INCORRETA!
+                            <div class="error">
+                                Senha Inserida Incorreta!
                         |]
                         redirect EntrarR 
         _ -> do

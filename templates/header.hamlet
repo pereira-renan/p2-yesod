@@ -4,21 +4,29 @@
             <a href=@{HomeR}>
                 <div class="bhome item-1">
                     PetAssistant
-        <div class="navbuttons">  
+        <div class="navbuttons">
             <div class="nav link-1">
-                spacing
-            <a href=@{ListVetR}>
-                    <div class="nav link-2">
-                        Veterinários
-            <div class="nav link-3">
-                Pets
-            <div class="nav link-4">
-                Consultas
+                spacing  
             $if null sess
+                <div class="nav link-1">
+                    spacing
+                <div class="nav link-1">
+                    spacing
+                <div class="nav link-1">
+                    spacing
                 <a href=@{EntrarR}>
-                    <div class="nav link-4">
+                    <div class="nav link-5">
                         Login
             $else
+                <a href=@{PetR}>
+                    <div class="nav link-2">
+                        Agendar
+                <a href=@{ListConsultaR}>
+                    <div class="nav link-3">
+                        Consultas
+                <a href=@{ListVetR}>
+                    <div class="nav link-4">
+                        Veterinários
                 <div class="nav link-5">
                     <form action=@{SairR} method="post">                 
                         <button type="submit" class="btn-link">Logout</button>

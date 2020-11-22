@@ -1,9 +1,79 @@
-h1{
-    font-family: Arial, Helvetica, sans-serif;
-    color: red;
-}
-
 .error{
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  color: red;
+  border-left: 6px solid;
+  border-bottom: 6px solid;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  padding: 6px;
 }
 
+.success{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  color: green;
+  border-left: 6px solid;
+  border-bottom: 6px solid;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  padding: 6px;
+}
+
+.form {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffdb99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 82vh;
+  border-radius: 25px;    
+  padding: 25px;
+}
+
+.controls.input {
+    padding: 5px;
+}
+
+.motivo {
+    width: 5px;
+    min-height: 100px;
+    max-width: 350px;
+    min-width: 200px;
+}
+
+table{
+    font-family: Arial, Helvetica, sans-serif;
+    table-layout: fixed;
+    height: 82%;
+    width: 100%;
+}
+
+table, td, th {
+    border: solid 1px;
+    padding: 10px;
+    text-align: center;
+}
+
+td.desc {
+    text-align: left;
+}
+
+th.col1 {
+    width: 100px
+}
+
+th.col2 {
+    width: 50px
+}
+
+th.col3 {
+    width: 60%
+}
+
+th.col4, th.col5, th.col6 {
+    width: 75px;
+    visibility: hidden;
+}

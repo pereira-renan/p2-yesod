@@ -8,13 +8,14 @@ module Handler.Consulta where
 
 import Import
 import Tool
+import Text.Lucius
 import Database.Persist.Sql
 
 getListConsultaR :: Handler Html
 getListConsultaR = do
-    sess <- lookupSession "_ID"
+    sess <- lookupSession "_EMAIL"
     case sess of 
-        Nothing -> redirect ForbiddenR
+        Nothing -> redirect HomeR
         Just email -> do
             usu <- runDB $ getBy (UniqueEmail email)
             case usu of 
@@ -26,6 +27,8 @@ getListConsultaR = do
                         \ WHERE usuario.id = ?"
                      pets <- runDB $ rawSql sql [toPersistValue uid] :: Handler [(Entity Usuario,Entity Consulta,Entity Pets)]
                      defaultLayout $ do 
+                        toWidgetHead $(luciusFile  "templates/header.lucius")
+                        $(whamletFile "templates/header.hamlet")
                         [whamlet|
                             <h1>
                                 Olá #{usuarioNome usuario}!

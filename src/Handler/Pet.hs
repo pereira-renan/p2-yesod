@@ -14,19 +14,24 @@ import Text.Lucius
 -- (<$>) = fmap :: Functor f => (a -> b) -> f a -> f b
 -- (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 formPet :: Maybe Pets -> Form Pets
-formPet p = renderDivs $ Pets
+formPet p = renderBootstrap $ Pets
     <$> areq textField (FieldSettings "Nome: " 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","nome")]
                        ) (fmap petsNome p)
-    <*> areq intField "Idade: " (fmap petsIdade p)
-    <*> areq textField (FieldSettings "Motivo da Visita: " 
+    <*> areq intField (FieldSettings "Idade: " 
                                       Nothing
                                       (Just "hs12")
                                       Nothing
-                                      [("class","myClass")]
+                                      [("class","idade")]
+                      )(fmap petsIdade p)
+    <*> areq textareaField (FieldSettings "Motivo da Visita: " 
+                                      Nothing
+                                      (Just "hs12")
+                                      Nothing
+                                      [("class","motivo")]
                        ) (fmap petsMotivoVisita p)
 
 auxPetR :: Route App -> Maybe Pets -> Handler Html
@@ -43,12 +48,14 @@ auxPetR rt petz = do
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
-                    <h1>
-                        CADASTRO DE PET
-                    
-                    <form action=@{rt} method=post>
-                        ^{widget}
-                        <input type="submit" value="Cadastrar">
+                    <div class="form">
+                        <h1>
+                            Realize aqui seu agendamento e compareça na data do veterinário de sua preferência
+                        
+                        <form action=@{rt} method=post>
+                            ^{widget}
+                            <br>
+                                <input type="submit" value="Enviar Agendamento">
                 |]
     
 getPetR :: Handler Html
@@ -81,19 +88,24 @@ getDescPetR pid = do
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
-                <h1>
-                    Nome: #{petsNome petz}
-                
-                <h2>
-                    Idade: #{petsIdade petz}
+                <body>
+                    <h1>
+                        Nome: #{petsNome petz}
+                    
+                    <h2>
+                        Idade: #{petsIdade petz}
 
-                <h3>
-                    Idade: #{petsMotivoVisita petz}
-                
-                <form action=@{ConsultarR pid} method=post>
-                    ^{widget}
-                    <input type="submit" value="Enviar">
+                    <h3>
+                        Motivo da Visita
+                        <br>
+                            #{petsMotivoVisita petz}
+                    
+                    <form action=@{ConsultarR pid} method=post>
+                        ^{widget}
+                        <br>
+                            <input type="submit" value="Finalizar Consulta">
                 |]
 
 getListPetR :: Handler Html
@@ -108,18 +120,26 @@ getListPetR = do
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
                     <table>
                         <thead>
                             <tr>
-                                <th> 
-                                    Nome
+                                <th class="col1"> 
+                                    Nome do Pet
                                 
-                                <th>
-                                    Pet
+                                <th class="col2">
+                                    Idade
                                 
-                                <th>
+                                <th class="col3">
                                     Motivo da Consulta
+
+                                <th class="col4">
+                                    
+                                <th class="col5">
+                                
+                                <th class="col6">
+                                    
                         <tbody>
                             $forall Entity pid p <- pets
                                 <tr>
@@ -130,19 +150,20 @@ getListPetR = do
                                     <td>
                                         #{petsIdade p}
 
-                                    <td>
+                                    <td class="desc">
                                         #{petsMotivoVisita p}
-                                    
+
                                     <th>
-                                        <a href=@{UpdPetR pid}>
-                                            Editar
-                                    $if null valid
-                                        <th>
-                                            
-                                    $else
-                                        <th>
-                                            <form action=@{DelPetR pid} method=post>
-                                                <input type="submit" value="ASD">
+                                        <form action=@{UpdPetR pid} method=get>
+                                            <input type="submit" value="Editar">
+
+                                    <th>
+                                        <form action=@{ConsultarR pid} method=post>
+                                            <input type="submit" value="Consultar">
+
+                                    <th>
+                                        <form action=@{DelPetR pid} method=post>
+                                            <input type="submit" value="Deletar">
             |]
 
 getUpdPetR :: PetsId -> Handler Html

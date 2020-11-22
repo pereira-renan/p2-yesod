@@ -100,6 +100,8 @@ getListVetR = do
             toWidgetHead $(luciusFile  "templates/header.lucius")
             $(whamletFile "templates/header.hamlet")
             [whamlet|
+                <h1>
+                    Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e durante quais dias estarão disponíveis na unidade.
                 <table>
                     <thead>
                         <tr>
@@ -107,8 +109,11 @@ getListVetR = do
                                 Nome
                             
                             <th>
-                                Vets
+                                Especialidade
                             
+                            <th>
+                                Rede social
+
                             <th>
                             
                             <th>
@@ -120,15 +125,22 @@ getListVetR = do
                                 
                                 <td>
                                     #{vetsEspecialidade v}
+
+                                <td>
+                                    <a href="https://www.instagram.com/pereira_renan/">
+                                        https://www.instagram.com/pereira_renan/
+
                                 
-                                <th>
-                                    <a href=@{UpdVetR vid}>
-                                        Editar
                                 $if null valid
+                                    
                                 $else
-                                <th>
-                                    <form action=@{DelVetR vid} method=post>
-                                        <input type="submit" value="X">
+                                    <th>
+                                        <a href=@{UpdVetR vid}>
+                                            Editar
+
+                                    <th>
+                                        <form action=@{DelVetR vid} method=post>
+                                            <input type="submit" value="X">
         |]
 
 getUpdVetR :: VetsId -> Handler Html

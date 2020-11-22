@@ -21,8 +21,11 @@ formUsu = renderBootstrap $ (,)
 getCadastrarR :: Handler Html
 getCadastrarR = do 
     (widget,_) <- generateFormPost formUsu
+    sess <- lookupSession "_EMAIL"
     msg <- getMessage
     defaultLayout $ do 
+        toWidgetHead $(luciusFile  "templates/header.lucius")
+        $(whamletFile "templates/header.hamlet")
         toWidgetHead $(luciusFile  "templates/form.lucius")
         geraForm CadastrarR "CADASTRO DE CLIENTES" "Cadastrar" msg widget
 
@@ -34,14 +37,14 @@ postCadastrarR = do
             if (usuarioSenha usuario == veri) then do 
                 runDB $ insert400 usuario 
                 setMessage [shamlet|
-                    <div>
-                        USUARIO INCLUIDO
+                    <div class="success">
+                        Usuário Cadastrado!
                 |]
                 redirect CadastrarR
             else do 
                 setMessage [shamlet|
-                    <div>
-                        SENHA E VERIFICACAO N CONFEREM
+                    <div class="error">
+                        Email ou Senha Incorretos!
                 |]
                 redirect CadastrarR
         _ -> redirect HomeR

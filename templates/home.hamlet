@@ -3,26 +3,32 @@
         <div class="title">
             PetAssistant
         <div class="general">
-            <br>
-                Olá!
+            $if null sess
+                <br>
+                    Olá!
+            $else
+                <br>
+                    Olá!
             <br>
                 Bem-vindo ao PetAssistant. Somos uma plataforma de apoio para o consultórios veterinários criada 100% em Haskell.
             <br>
-                Aqui você pode verificar os 
-                    <a href=@{ListVetR} class="general">
-                        veterinários
-                    disponíveis no consultório e suas especialidades, assim como 
-                        <a href=@{PetR} class="general">
-                            registrar
-                        o seu Pet seu nome, idade, raça e o motivo da sua consulta.
+                Aqui você pode verificar os veterinários disponíveis no consultório e suas especialidades, assim como registrar o seu Pet seu nome, idade, raça e o motivo da sua consulta.
             <br>
                 Ao chegar no consultório, informe a identificação e o nome do seu pet ao veterinário. Ele irá realizar a leitura da sua ficha de entrada e, após a consulta, irá registrar o diagnóstico do seu animalzinho para que possa verificar posteriormente em casa.
             <br>
             <br>
             <div class="end">
-                <a href=@{CadastrarR}>
-                    <div class="bottom cadastro">
-                        Cadastro
-                <a href=@{EntrarR}>
-                    <div class="bottom cadastro">
-                        Login            
+                $if null sess
+                    <a href=@{CadastrarR}>
+                        <div class="bottom cadastro">
+                            Cadastro
+                    <a href=@{EntrarR}>
+                        <div class="bottom cadastro">
+                            Login 
+                $else
+                    <a href=@{ListVetR}>
+                        <div class="bottom cadastro">
+                            Veterinários
+                    <a href=@{PetR}>
+                        <div class="bottom cadastro">
+                            Agendar            
