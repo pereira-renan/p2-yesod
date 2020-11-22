@@ -85,7 +85,7 @@ postVetR = do
 -- SELECT * from vetz where id = vid 
 getDescVetR :: VetsId -> Handler Html
 getDescVetR vid = do 
-    sess <- lookupSession "_ID"
+    sess <- lookupSession "_EMAIL"
     case sess of 
         Nothing -> redirect ForbiddenR
         Just _ -> do
@@ -125,21 +125,21 @@ getListVetR = do
                 <table>
                         <thead>
                             <tr>
-                                <th class="col1"> 
+                                <th class="colv1"> 
                                     Nome do Vet
                                 
-                                <th class="col2">
+                                <th class="colv2">
                                     Especialiade
                                 
-                                <th class="col3">
-                                    Redes Social
+                                <th class="colv3">
+                                    Rede Social
 
-                                <th class="col4">
+                                <th class="colv4">
                                     Dias no Consultório
 
-                                <th class="col5">
+                                <th class="col5v">
                                 
-                                <th class="col6">
+                                <th class="col6v">
                                     
                         <tbody>
                             $forall Entity vid v <- vets
@@ -152,7 +152,7 @@ getListVetR = do
                                         #{vetsEspecialidade v}
 
                                     <td>
-                                        <a href=#{vetsRedeSocial v}>
+                                        <a href=#{vetsRedeSocial v} target="_blank">
                                             #{vetsRedeSocial v}
 
                                     <th>
@@ -163,7 +163,7 @@ getListVetR = do
                                             <form action=@{DescVetR vid} method=get>
                                                 <input type="submit" value="Ver">
                                         <th>
-                                            <form action=@{PetR} method=post>
+                                            <form action=@{PetR} method=get>
                                                 <input type="submit" value="Agendar">
                                     $else
                                         <th>
@@ -199,7 +199,7 @@ postUpdVetR vid = do
             case resp of 
                 FormSuccess novo -> do
                     runDB $ replace vid novo
-                    redirect (DescVetR vid) 
+                    redirect ListVetR 
                 _ -> redirect HomeR
 
 postDelVetR :: VetsId -> Handler Html

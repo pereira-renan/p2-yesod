@@ -66,7 +66,7 @@ th.col1, th.ccol4 {
 }
 
 th.col2 {
-    width: 50px
+    width: 50px;
 }
 
 th.col3 {
@@ -85,4 +85,16 @@ th.col4, th.col5, th.col6 {
 
 th.ccol3, th.ccol5 {
     width: 75px;
+}
+
+th.colv1, th.colv2 {
+    width: 100px;
+}
+
+th.colv1, th.colv2 {
+    width: 100px;
+}
+
+th.colv3 {
+    width: 300px;
 }

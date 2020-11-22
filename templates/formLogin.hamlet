@@ -1,0 +1,13 @@
+<body>
+    <div class="form">
+        $maybe mensa <- msg 
+                ^{mensa}
+            
+        <h1>
+            #{titulo}
+
+        <form method=post action=@{rt}>
+            ^{widget}
+        <br>
+                <input type="submit" value=#{btn}>
+

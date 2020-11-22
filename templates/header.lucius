@@ -37,6 +37,10 @@
   visibility: hidden;
 }
 
+.nav.link-0{
+  visibility: hidden;
+}
+
 a {
   text-decoration: none;
   color: inherit;

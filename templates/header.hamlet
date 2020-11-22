@@ -33,8 +33,9 @@
                         spacing  
                     <div class="nav link-1">
                         spacing
-                    <div class="nav link-1">
-                        spacing
+                    <a href=@{CadastrarR}>
+                        <div class="nav link-4">
+                            Cadastrar
                     <a href=@{EntrarR}>
                         <div class="nav link-5">
                             Login

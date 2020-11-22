@@ -10,6 +10,7 @@
 /pets                        ListPetR  GET
 /pet/#PetsId/modifica        UpdPetR   GET POST
 /pet/#PetsId/del             DelPetR   POST
+/pet/#PetsId/confirmar       ConfirmaPetR   GET
 
 /vet                         VetR      GET POST
 /vet/#VetsId/descr           DescVetR  GET
@@ -22,8 +23,8 @@
 /login                       EntrarR    GET POST
 /logout                      SairR      POST
 
-/consulta/lista              ListConsultaR GET
-/consulta/#PetsId/atender    ConsultarR POST
+/consultas/listar             ListConsultaR GET
+/consultas/#PetsId/atender    ConsultarR POST
 
 /admin                       AdminR     GET
 

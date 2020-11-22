@@ -71,7 +71,7 @@ postPetR = do
             case resp of 
                 FormSuccess petz -> do 
                     pid <- runDB $ insert petz
-                    redirect ListPetR
+                    redirect (ConfirmaPetR pid)
                 _ -> redirect HomeR
 
 -- SELECT * from petz where id = pid 
@@ -106,6 +106,33 @@ getDescPetR pid = do
                         ^{widget}
                         <br>
                             <input type="submit" value="Finalizar Consulta">
+                |]
+
+getConfirmaPetR :: PetsId -> Handler Html
+getConfirmaPetR pid = do  
+    sess <- lookupSession "_EMAIL"
+    case sess of 
+        Nothing -> redirect ForbiddenR
+        Just _ -> do
+            petz <- runDB $ get404 pid
+            defaultLayout $ do 
+                sess <- lookupSession "_EMAIL"
+                valid <- lookupSession "_ID"
+                toWidgetHead $(luciusFile  "templates/header.lucius")
+                $(whamletFile "templates/header.hamlet")
+                toWidgetHead $(luciusFile  "templates/form.lucius")
+                [whamlet|
+                <body>
+                    <h1>
+                        Nome: #{petsNome petz}
+                    
+                    <h2>
+                        Idade: #{petsIdade petz}
+
+                    <h3>
+                        Motivo da Visita
+                        <br>
+                            #{petsMotivoVisita petz}
                 |]
 
 getListPetR :: Handler Html
