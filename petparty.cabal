@@ -91,10 +91,10 @@ library
 executable petparty
   main-is: main.hs
   other-modules:
-      Main
       Paths_petparty
   hs-source-dirs:
-      app
+      src
+    ,  app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
