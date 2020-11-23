@@ -10,7 +10,7 @@
                     Bem-vindo ao PetAssistant. Somos uma plataforma de apoio para o consultórios veterinários desenvolvida 100% em
                     <a href="https://www.haskell.org/" style="text-decoration: underline" target="_blank">
                         Haskell.
-                    <br><br>
+                <br>
                     No site você pode verificar os veterinários disponíveis no consultório e suas especialidades, assim como registrar o seu Pet para consulta. Essa etapa é importante para que nossos especialista possam se preparar para melhor atender o seu pet!<br><br>
                     Ao chegar no consultório, informe o nome do seu pet ao veterinário. Ele irá realizar a leitura da sua ficha de entrada e, após a consulta, irá registrar o diagnóstico do seu animalzinho para que possa ser verificado posteriormente em casa.<br>
                 <div class="end">
@@ -27,4 +27,10 @@
                                 Veterinários
                         <a href=@{PetR}>
                             <div class="bottom cadastro">
-                                Agendar            
+                                Agendar      
+                <br>
+                <br>
+                <br>
+                    <div style="font-size: 14px; text-align: center">
+                        <a href=@{SobreR} style="text-decoration: underline" target="_blank">
+                            Conheça mais sobre os desenvolvedores deste projeto clicando aqui.      

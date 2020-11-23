@@ -20,3 +20,12 @@ getHomeR = defaultLayout $ do
     $(whamletFile "templates/header.hamlet")
     toWidgetHead $(luciusFile  "templates/home.lucius")
     $(whamletFile "templates/home.hamlet")
+
+getSobreR :: Handler Html
+getSobreR = defaultLayout $ do 
+    sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
+    toWidgetHead $(luciusFile  "templates/header.lucius")
+    $(whamletFile "templates/header.hamlet")
+    toWidgetHead $(luciusFile  "templates/home.lucius")
+    $(whamletFile "templates/sobre.hamlet")

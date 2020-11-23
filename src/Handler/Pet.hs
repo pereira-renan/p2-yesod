@@ -174,6 +174,8 @@ getListPetR = do
                         <h1>
                             PETS CADASTRADOS
                         <br>
+                        <h3>
+                            Nesta página estão os pets com agendamentos realizados
                         <br>
                         <form action=@{PetR} method=get>
                             <input class="btnAdd" type="submit" value="Adicionar Pet">

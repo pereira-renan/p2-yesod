@@ -28,7 +28,7 @@ getCadastrarR = do
         toWidgetHead $(luciusFile  "templates/header.lucius")
         $(whamletFile "templates/header.hamlet")
         toWidgetHead $(luciusFile  "templates/form.lucius")
-        geraForm CadastrarR "CADASTRO DE CLIENTES" "Cadastrar" msg widget
+        geraForm CadastrarR "CADASTRO" "Cadastrar" msg widget
 
 postCadastrarR :: Handler Html
 postCadastrarR = do 

@@ -1,0 +1,47 @@
+<body>
+    <div class="landing">
+        <div class="title">
+            Sobre o Projeto
+        <div class="general">
+            <div class="intro">
+                <br>
+                    O PetAssistant surgiu através de uma ideia secundária a partir do nosso projeto de TCC chamado PetParty.
+                <br>
+                    O foco do PetParty é criar uma plataforma web que facilite o contato entre donos de pet e cuidadores próximos, auxiliando em dúvidas, fornencendo serviços enquanto fomentamos a comunidade incentivando o contato entre os apaixonados por pets.
+                <br>
+                    Com o PetAssistant buscamos manter esse conceito, proporcinar um contato mais aberto e transparente entre unidades que cuidam de pets (sejam elas clínicas, ONGs ou até mesmo alguém que atenda à domicílio) e os clientes.
+                <br>    
+                    No PetAssistant os próprios clientes verificam na plataforma quais os especialistas disponíveis para atendimento e dão entrada na ficha de cadastro do pet, antecipando o motivo pelo qual estão buscando aquele serviço, então, o especialista consulta a base de pets cadastrados, valida as informações fornecidas para que, no momento do atendimento, já possua uma ideia completa das necessidades do animalzinho que irá atender.
+                <br>
+                    Esse projeto foi feito por 4 caras da Baixada Santista, apaixonados por tecnologia, estudantes da Faculdade de Tecnologia Rubens Lara. Confira nossos contatos abaixo:
+                <br>
+                <ul class="listaDev">
+                    <li>
+                        GIANCARLO WISINEWSKI -
+                        <a href="https://github.com/Wisinewski/">
+                            Github
+                        -
+                        <a href="https://www.linkedin.com/in/giangomes/">
+                            LinkedIn
+                    <li>
+                        MATEUS MORAIS -
+                        <a href="https://github.com/morais-mateus/">
+                            Github
+                        -
+                        <a href="https://www.linkedin.com/in/mateus-morais-535398173/">
+                            LinkedIn
+                    <li>
+                        RENAN DE SOUZA PEREIRA -
+                        <a href="https://github.com/pereira-renan/">
+                            Github
+                        -
+                        <a href="https://www.linkedin.com/in/pereira-renan/">
+                            LinkedIn
+                    <li>
+                        ROBERTO DA SILVA -
+                        <a href="https://github.com/RobertoDSN/">
+                            Github
+                        -
+                        <a href="https://www.linkedin.com/in/roberto-dsn/">
+                            LinkedIn
+                    
