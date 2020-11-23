@@ -18,6 +18,10 @@ A aplicação possui três perfis de acesso/visualização da plataforma: deslog
 	* Realizar cadastro via platafora. Este login permite o acesso à maioria das páginas e botões de interação básicos do site.
 * Logado-admin
 	* Realizar login com acesso elevado `admin@admin.com / 123`. Este login permite acesso total a qualquer página da aplicação e visualização diferente dos botões de interação do site.
+	
+## Demo
+
+Para realizar testes na plataforma, acessar: https://petparty-assistant.herokuapp.com/
 
 ## Iniciando
 Para o clonar, realizar a build e execução local do projeto é necessário ter instalado o [Github CLI](https://github.com/cli/cli), [Stack](https://haskell-lang.org/get-started) e o banco de dados [PostgreSQL](https://www.postgresql.org/download/windows/).
