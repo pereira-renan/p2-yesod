@@ -7,7 +7,7 @@ cabal-version: 1.12
 -- hash: 5eae331b0fcb5a981ced3faed7d0d7265acd97ec1b50f4a8cd1a79ca251cba31
 
 name:           petparty
-version:        0.0.0
+version:        1.0.0
 build-type:     Simple
 
 flag dev
@@ -93,8 +93,7 @@ executable petparty
   other-modules:
       Paths_petparty
   hs-source-dirs:
-      src
-    , app
+      app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
