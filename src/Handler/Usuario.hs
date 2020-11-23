@@ -24,8 +24,7 @@ getCadastrarR = do
     sess <- lookupSession "_EMAIL"
     valid <- lookupSession "_ID"
     case sess of 
-        Nothing -> redirect ForbiddenR
-        Just _ -> do
+        Nothing -> do
             msg <- getMessage
             defaultLayout $ do 
                 setTitle "Cadastro"
@@ -33,6 +32,7 @@ getCadastrarR = do
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
                 geraForm CadastrarR "CADASTRO" "Cadastrar" msg widget
+        Just _ -> redirect HomeR
 
 postCadastrarR :: Handler Html
 postCadastrarR = do 
