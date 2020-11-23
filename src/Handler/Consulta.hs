@@ -25,9 +25,10 @@ getListConsultaR = do
                      let sql = "SELECT ??,??,?? FROM usuario \
                         \ INNER JOIN consulta ON consulta.usuarioid = usuario.id \
                         \ INNER JOIN pets ON consulta.petid = pets.id \
-                        \ ORDER BY usuario.id = ?;"
+                        \ ORDER BY usuario.id = ?"
                      pets <- runDB $ rawSql sql [toPersistValue uid] :: Handler [(Entity Usuario,Entity Consulta,Entity Pets)]
                      defaultLayout $ do 
+                        setTitle "Consultas"
                         toWidgetHead $(luciusFile  "templates/header.lucius")
                         $(whamletFile "templates/header.hamlet")
                         toWidgetHead $(luciusFile  "templates/form.lucius")

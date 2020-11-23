@@ -81,7 +81,7 @@ postVetR = do
             case resp of 
                 FormSuccess vetz -> do 
                     vid <- runDB $ insert vetz
-                    redirect (DescVetR vid)
+                    redirect ListVetR
                 _ -> redirect HomeR
 
 -- SELECT * from vetz where id = vid 
@@ -94,6 +94,7 @@ getDescVetR vid = do
             vetz <- runDB $ get404 vid
             valid <- lookupSession "_ID"
             defaultLayout $ do 
+                setTitle "Veterinários"
                 sess <- lookupSession "_EMAIL"
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
@@ -113,7 +114,7 @@ getDescVetR vid = do
                             <h3>
                                 #{vetsEspecialidade vetz}<br><br>
                             <h2>
-                                Rede Sociail<br>
+                                Rede Social<br>
                             <h3>
                                 <a href="#{vetsRedeSocial vetz}">
                                     #{vetsRedeSocial vetz}<br><br>
@@ -129,6 +130,7 @@ getListVetR = do
         defaultLayout $ do 
             sess <- lookupSession "_EMAIL"
             valid <- lookupSession "_ID"
+            setTitle "Veterinários Parceiros"
             toWidgetHead $(luciusFile  "templates/header.lucius")
             $(whamletFile "templates/header.hamlet")
             toWidgetHead $(luciusFile  "templates/form.lucius")
@@ -210,6 +212,7 @@ postUpdVetR :: VetsId -> Handler Html
 postUpdVetR vid = do
     sess <- lookupSession "_ID"
     defaultLayout $ do 
+        setTitle "Veterinários"
         sess <- lookupSession "_EMAIL"
         valid <- lookupSession "_ID"
         toWidgetHead $(luciusFile  "templates/header.lucius")
