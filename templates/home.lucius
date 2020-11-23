@@ -4,7 +4,8 @@
     background-color: #ffdb99;
     letter-spacing: 0.2px;    
     padding: 25px;
-    height: 82vh;
+    min-height: 82vh;
+    height: 100%;
     border-radius: 25px;
 }
 .title {
@@ -58,4 +59,9 @@ a.general {
 
 .intro {
     text-align: justify;
+}
+
+ul.listaDev {
+    text-align: center;
+    list-style-type: none;
 }

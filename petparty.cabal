@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ea92551fd22be07c037db38b900eb4a4e752c61e6bbfaf151c7c653197bc196f
+-- hash: 5eae331b0fcb5a981ced3faed7d0d7265acd97ec1b50f4a8cd1a79ca251cba31
 
 name:           petparty
-version:        0.0.0
+version:        1.0.0
 build-type:     Simple
 
 flag dev
@@ -89,9 +89,8 @@ library
   default-language: Haskell2010
 
 executable petparty
-  main-is: main.hs
+  main-is: Main.hs
   other-modules:
-      DevelMain
       Paths_petparty
   hs-source-dirs:
       app

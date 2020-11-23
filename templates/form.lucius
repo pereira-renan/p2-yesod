@@ -149,7 +149,7 @@ label.control-label {
     font-size: x-large;
 }
 
-input[id="enviarVet"], input[id="hident3"],input[id="hident2"] {
+input[id="enviarVet"] {
     width: 100px;
     margin-top: 25px;
 }

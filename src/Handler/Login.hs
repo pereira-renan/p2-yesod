@@ -22,6 +22,7 @@ getEntrarR = do
     defaultLayout $ do 
         sess <- lookupSession "_EMAIL"
         valid <- lookupSession "_ID"
+        setTitle "Login"
         toWidgetHead $(luciusFile  "templates/header.lucius")
         $(whamletFile "templates/header.hamlet")
         toWidgetHead $(luciusFile  "templates/form.lucius")
@@ -35,7 +36,7 @@ postEntrarR :: Handler Html
 postEntrarR = do 
     ((result,_),_) <- runFormPost formLogin
     case result of 
-        FormSuccess ("admin@admin.com", senha) -> do
+        FormSuccess ("admin@admin.com", "123456") -> do
             setSession "_EMAIL" "admin@admin.com"
             setSession "_ID" "admin"
             redirect HomeR
@@ -73,6 +74,7 @@ getAdminR :: Handler Html
 getAdminR = defaultLayout $ do 
     sess <- lookupSession "_EMAIL"
     valid <- lookupSession "_ID"
+    setTitle "Admin"
     toWidgetHead $(luciusFile  "templates/header.lucius")
     $(whamletFile "templates/header.hamlet")
     [whamlet|

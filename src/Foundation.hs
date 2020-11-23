@@ -26,6 +26,7 @@ instance Yesod App where
     
     isAuthorized HomeR _ = return Authorized
     isAuthorized EntrarR _ = return Authorized
+    isAuthorized SobreR _ = return Authorized
     isAuthorized CadastrarR  _ = return Authorized
     isAuthorized ListVetR  _ = return Authorized
     isAuthorized VetR _ = isAdmin
@@ -40,7 +41,7 @@ isAdmin = do
     case sess of 
         Nothing -> return AuthenticationRequired
         Just "admin@admin.com" -> return Authorized
-        Just _ -> return $ Unauthorized "VC EH USUARIO COMUM"
+        Just _ -> return $ Unauthorized "Você não possui permissão para acessar esse conteúdo."
 
 isUsuario :: Handler AuthResult
 isUsuario = do 

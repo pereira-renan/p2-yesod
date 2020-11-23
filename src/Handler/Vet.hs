@@ -61,7 +61,7 @@ auxVetR rt vetz = do
                                     Você não tem permissão para acessar essa página.
                             $else
                                 <h1>
-                                    VETERINÁRIOS
+                                    VETERINÁRIO
                                 
                                 <form action=@{rt} method=post>
                                     ^{widget}
@@ -81,7 +81,7 @@ postVetR = do
             case resp of 
                 FormSuccess vetz -> do 
                     vid <- runDB $ insert vetz
-                    redirect (DescVetR vid)
+                    redirect ListVetR
                 _ -> redirect HomeR
 
 -- SELECT * from vetz where id = vid 
@@ -94,6 +94,7 @@ getDescVetR vid = do
             vetz <- runDB $ get404 vid
             valid <- lookupSession "_ID"
             defaultLayout $ do 
+                setTitle "Veterinários"
                 sess <- lookupSession "_EMAIL"
                 valid <- lookupSession "_ID"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
@@ -103,15 +104,24 @@ getDescVetR vid = do
                     <div class="background-list">
                         <div class="form">
                             <h1>
-                                Nome: #{vetsNome vetz}
-                            
-                            <h2>
-                                Especialiade: #{vetsEspecialidade vetz}
-                                
-                            <h3>
-                                Redes Sociais: #{vetsRedeSocial vetz}
+                                NOSSOS VETERINÁRIOS
                             <br>
-                                Expediente: #{vetsExpediente vetz}
+                            <h3 style="font-size: 24px">
+                                Conheça mais sobre #{vetsNome vetz}!
+                            <br>
+                            <h2>
+                                Especialidade<br>
+                            <h3>
+                                #{vetsEspecialidade vetz}<br><br>
+                            <h2>
+                                Rede Social<br>
+                            <h3>
+                                <a href="#{vetsRedeSocial vetz}">
+                                    #{vetsRedeSocial vetz}<br><br>
+                            <h2>
+                                Expediente<br>
+                            <h3>
+                                #{vetsExpediente vetz}
                 |]
 
 getListVetR :: Handler Html
@@ -120,6 +130,7 @@ getListVetR = do
         defaultLayout $ do 
             sess <- lookupSession "_EMAIL"
             valid <- lookupSession "_ID"
+            setTitle "Veterinários Parceiros"
             toWidgetHead $(luciusFile  "templates/header.lucius")
             $(whamletFile "templates/header.hamlet")
             toWidgetHead $(luciusFile  "templates/form.lucius")
@@ -130,7 +141,7 @@ getListVetR = do
                             VETERINÁRIOS
                         <br>
                         <h3 class="intro">
-                            Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e durante quais dias estarão disponíveis na unidade.
+                            Os veterinários abaixo são os nossos apaixonados por Pets, são eles que realizaram a consulta presencial em nossa unidade, conheça mais sobre eles, suas especialidades e seu expediente na unidade.
                         $maybe adm <- valid
                             <form action=@{VetR} method=get>
                                 <input class="btnAdd" type="submit" value="Adicionar Veterinário">
@@ -148,7 +159,7 @@ getListVetR = do
                                             Rede Social
 
                                         <th class="colv4">
-                                            Horário de Atendimento
+                                            Expediente
 
                                         <th class="colv5">
                                         
@@ -165,7 +176,7 @@ getListVetR = do
                                                 #{vetsEspecialidade v}
 
                                             <td>
-                                                <a href="https://"+#{vetsRedeSocial v} target="_blank">
+                                                <a href=#{vetsRedeSocial v} target="_blank">
                                                     #{vetsRedeSocial v}
 
                                             <td>
@@ -201,6 +212,7 @@ postUpdVetR :: VetsId -> Handler Html
 postUpdVetR vid = do
     sess <- lookupSession "_ID"
     defaultLayout $ do 
+        setTitle "Veterinários"
         sess <- lookupSession "_EMAIL"
         valid <- lookupSession "_ID"
         toWidgetHead $(luciusFile  "templates/header.lucius")

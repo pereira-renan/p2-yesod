@@ -44,6 +44,7 @@ auxPetR rt petz = do
             defaultLayout $ do 
                 sess <- lookupSession "_EMAIL"
                 valid <- lookupSession "_ID"
+                setTitle "Agendamento"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
@@ -90,39 +91,44 @@ getDescPetR pid = do
             defaultLayout $ do 
                 sess <- lookupSession "_EMAIL"
                 valid <- lookupSession "_ID"
+                setTitle "Atendimento"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
                 [whamlet|
                     <div class="form">
-                        <h1>
-                            ATENDIMENTO
-                        <br>
-                        <br>
-                        <h2>
-                            Nome<br>
-                        <h3>
-                            #{petsNome petz}
-                        <h2>
-                            Idade<br>
-                        <h3>
-                            #{petsIdade petz}
-                        <h2>
-                            Motivo da Visita<br>
-                        <h3>
-                            #{petsMotivoVisita petz}
-                        <br>                            
-                        <form action=@{ConsultarR pid} method=post>
-                            ^{widget}
+                        $if null valid
+                            <h1>
+                                Você não tem permissão para acessar esta página.
+                        $else
+                            <h1>
+                                ATENDIMENTO
                             <br>
-                                <input type="submit" value="Finalizar Consulta">
+                            <br>
+                            <h2>
+                                Nome<br>
+                            <h3>
+                                #{petsNome petz}
+                            <h2>
+                                Idade<br>
+                            <h3>
+                                #{petsIdade petz}
+                            <h2>
+                                Motivo da Visita<br>
+                            <h3>
+                                #{petsMotivoVisita petz}
+                            <br>                            
+                            <form action=@{ConsultarR pid} method=post>
+                                ^{widget}
+                                <br>
+                                    <input type="submit" value="Finalizar Consulta">
                 |]
 
 getConfirmaPetR :: PetsId -> Handler Html
 getConfirmaPetR pid = do  
     sess <- lookupSession "_EMAIL"
     case sess of 
-        Nothing -> redirect ForbiddenR
+        Nothing -> redirect HomeR
         Just _ -> do
             petz <- runDB $ get404 pid
             defaultLayout $ do 
@@ -131,6 +137,7 @@ getConfirmaPetR pid = do
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
+                setTitle "Agendamento"
                 [whamlet|
                     <div class="background-list">
                         <div class="form">
@@ -166,6 +173,7 @@ getListPetR = do
             defaultLayout $ do 
                 sess <- lookupSession "_EMAIL"
                 valid <- lookupSession "_ID"
+                setTitle "Pets Cadastrados"
                 toWidgetHead $(luciusFile  "templates/header.lucius")
                 $(whamletFile "templates/header.hamlet")
                 toWidgetHead $(luciusFile  "templates/form.lucius")
@@ -174,6 +182,8 @@ getListPetR = do
                         <h1>
                             PETS CADASTRADOS
                         <br>
+                        <h3>
+                            Nesta página estão os pets com agendamentos realizados
                         <br>
                         <form action=@{PetR} method=get>
                             <input class="btnAdd" type="submit" value="Adicionar Pet">
@@ -224,16 +234,21 @@ getListPetR = do
 getUpdPetR :: PetsId -> Handler Html
 getUpdPetR pid = do 
     sess <- lookupSession "_EMAIL"
-    case sess of 
+    valid <- lookupSession "_ID"
+    case valid of
         Nothing -> redirect ForbiddenR
-        Just _ -> do
-            antigo <- runDB $ get404 pid
-            auxPetR (UpdPetR pid) (Just antigo)    
+        Just _ ->
+            case sess of 
+                Nothing -> redirect ForbiddenR
+                Just _ -> do
+                    antigo <- runDB $ get404 pid
+                    auxPetR (UpdPetR pid) (Just antigo)    
     
 -- UPDATE petz WHERE id = pid SET ...
 postUpdPetR :: PetsId -> Handler Html
 postUpdPetR pid = do 
     sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
     defaultLayout $ do 
         sess <- lookupSession "_EMAIL"
         valid <- lookupSession "_ID"
@@ -252,6 +267,7 @@ postUpdPetR pid = do
 postDelPetR :: PetsId -> Handler Html
 postDelPetR pid = do 
     sess <- lookupSession "_EMAIL"
+    valid <- lookupSession "_ID"
     case sess of 
         Nothing -> redirect ForbiddenR
         Just _ -> do
