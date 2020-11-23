@@ -49,7 +49,7 @@ stack exec petparty
 	
 ## Bugs conhecidos
 
-1. É retornado um erro de SQL em tela ao deletar um pet que possui um registro ativo na tabela "consulta".
+* É retornado um erro de SQL em tela ao deletar um pet que possui um registro ativo na tabela "consulta".
 
 ## Implementações futuras
 
@@ -69,9 +69,9 @@ Para contribuir à este projeto, siga estes passos:
 ## Contribuidores
 
 Agradeço aos colegas abaixo pelas contribuições ao projeto:
-*@Wisinewski :computer:
-*@morais-mateus :computer:
-*@RobertoDSN :computer:
+* @Wisinewski :computer:
+* @morais-mateus :computer:
+* @RobertoDSN :computer:
 
 ## Documentação de apoio
 * [Yesod Book (em inglês)](https://www.yesodweb.com/book)
@@ -79,3 +79,5 @@ Agradeço aos colegas abaixo pelas contribuições ao projeto:
 * [Yesod e Haskell Aplicações web com Programação Funcional pura - por Alexandre Garcia de Oliveira, Patrick Augusto da Silva, Felipe Cannarozzo Lourenço (em português)](https://www.casadocodigo.com.br/products/livro-yesod-haskell)
 
 ## Licenciamento
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
